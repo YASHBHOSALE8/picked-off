@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "name": "hand_verified_mixed",
+    "description": "Hand-verified: informed decline, informed pick-off, quote move, noise fill, noise balk; SC=16 AS=-14 IC=0 total=2 half-ticks (arithmetic in test_vectors.py).",
+    "seed": 0,
+    "params": {
+      "v0": 10000,
+      "round_us": 60000000,
+      "lambda_j": 0.5,
+      "p_jump": 0.2,
+      "lambda_a": 4.0,
+      "alpha": 0.3,
+      "delta0": 4.0
+    }
+  },
+  "event_stream": [
+    {
+      "t_us": 0,
+      "type": "quote",
+      "bid": 9995,
+      "ask": 10005
+    },
+    {
+      "t_us": 250003,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 1100009,
+      "type": "jump",
+      "size": 9
+    },
+    {
+      "t_us": 1400011,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 2000003,
+      "type": "quote",
+      "bid": 10004,
+      "ask": 10010
+    },
+    {
+      "t_us": 2600017,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.3
+    },
+    {
+      "t_us": 4100023,
+      "type": "jump",
+      "size": -4
+    },
+    {
+      "t_us": 5200031,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.62
+    }
+  ],
+  "expected_output": {
+    "fills": [
+      {
+        "t_us": 1400011,
+        "side": "buy",
+        "price": 10005,
+        "v_at_fill": 10009,
+        "trader": "informed",
+        "markout_1s": -4,
+        "markout_5s": 0
+      },
+      {
+        "t_us": 2600017,
+        "side": "sell",
+        "price": 10004,
+        "v_at_fill": 10009,
+        "trader": "noise",
+        "markout_1s": 5,
+        "markout_5s": 1
+      }
+    ],
+    "declines": [
+      {
+        "t_us": 250003,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 5200031,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      }
+    ],
+    "v_terminal": 10005,
+    "inventory_terminal": 0,
+    "cash_terminal": 1,
+    "pnl_decomposition_half_ticks": {
+      "total": 2,
+      "spread_captured": 16,
+      "adverse_selection": -14,
+      "inventory_cost": 0
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "name": "smoke_two_arrivals",
+    "description": "One noise fill at the ask, one informed decline, one jump.",
+    "seed": 42,
+    "params": { "v0": 10000, "round_us": 60000000, "lambda_j": 0.5, "p_jump": 0.2,
+                "lambda_a": 4.0, "alpha": 0.3, "delta0": 4.0 }
+  },
+  "event_stream": [
+    { "t_us": 0,        "type": "quote",   "bid": 9997, "ask": 10003 },
+    { "t_us": 400037,   "type": "arrival", "trader": "noise", "side_intent": "buy", "u_accept": 0.41370000 },
+    { "t_us": 900211,   "type": "arrival", "trader": "informed", "side_intent": null, "u_accept": null },
+    { "t_us": 1500421,  "type": "jump",    "size": -7 }
+  ],
+  "expected_output": {
+    "fills": [
+      { "t_us": 400037, "side": "buy", "price": 10003, "v_at_fill": 10000,
+        "trader": "noise", "markout_1s": 3, "markout_5s": 10 }
+    ],
+    "declines": [
+      { "t_us": 900211, "trader": "informed", "side_intent": null, "reason": "v_inside_quotes" }
+    ],
+    "v_terminal": 9993,
+    "inventory_terminal": -1,
+    "cash_terminal": 10003,
+    "pnl_decomposition_half_ticks": {
+      "total": 20, "spread_captured": 6, "adverse_selection": 0, "inventory_cost": 14
+    }
+  }
+}

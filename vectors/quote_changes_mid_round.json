@@ -1,0 +1,3707 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "name": "quote_changes_mid_round",
+    "description": "Scripted quote schedule stepping through the round.",
+    "seed": 1005,
+    "params": {
+      "v0": 10000,
+      "round_us": 60000000,
+      "lambda_j": 0.5,
+      "p_jump": 0.2,
+      "lambda_a": 4.0,
+      "alpha": 0.3,
+      "delta0": 4.0
+    }
+  },
+  "event_stream": [
+    {
+      "t_us": 0,
+      "type": "quote",
+      "bid": 9997,
+      "ask": 10003
+    },
+    {
+      "t_us": 292213,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 548477,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.1908273769966824
+    },
+    {
+      "t_us": 1936557,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.45944735573704265
+    },
+    {
+      "t_us": 3089429,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.4136765420879782
+    },
+    {
+      "t_us": 3238509,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.3264977004810119
+    },
+    {
+      "t_us": 3383718,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.1752131861272418
+    },
+    {
+      "t_us": 3454345,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.24735446127720873
+    },
+    {
+      "t_us": 3563892,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.551190422092373
+    },
+    {
+      "t_us": 3701059,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.07962999085765421
+    },
+    {
+      "t_us": 4234040,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.267680031236032
+    },
+    {
+      "t_us": 4245016,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.47264591640298415
+    },
+    {
+      "t_us": 4506948,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.731733184042193
+    },
+    {
+      "t_us": 5072391,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.4895371279524323
+    },
+    {
+      "t_us": 5325431,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.4238646587369488
+    },
+    {
+      "t_us": 5649350,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.622474371794726
+    },
+    {
+      "t_us": 5766155,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.424935499990176
+    },
+    {
+      "t_us": 5851222,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 6267036,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.4543570707024741
+    },
+    {
+      "t_us": 6695082,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.09776052050518846
+    },
+    {
+      "t_us": 6864427,
+      "type": "jump",
+      "size": 4
+    },
+    {
+      "t_us": 6873675,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 6923707,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 6927054,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.4456034675341498
+    },
+    {
+      "t_us": 7000003,
+      "type": "quote",
+      "bid": 9999,
+      "ask": 10005
+    },
+    {
+      "t_us": 7319591,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.03358114968748882
+    },
+    {
+      "t_us": 7623633,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.5608559769009296
+    },
+    {
+      "t_us": 7753719,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 8059316,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.9376628264029656
+    },
+    {
+      "t_us": 8091187,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.5242433819838261
+    },
+    {
+      "t_us": 8755469,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 9127543,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.862105050391376
+    },
+    {
+      "t_us": 9268147,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 9481103,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.7878935682007759
+    },
+    {
+      "t_us": 9542393,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.3154716885700505
+    },
+    {
+      "t_us": 9553798,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 9554933,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.11392451808870863
+    },
+    {
+      "t_us": 9634506,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.42787288861144446
+    },
+    {
+      "t_us": 9671979,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.8960738399525592
+    },
+    {
+      "t_us": 9734082,
+      "type": "jump",
+      "size": -7
+    },
+    {
+      "t_us": 9905454,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.8121544485169169
+    },
+    {
+      "t_us": 10012821,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 10039111,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.9773669865867294
+    },
+    {
+      "t_us": 10079565,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 10120262,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.15526209177138883
+    },
+    {
+      "t_us": 10228960,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 10235251,
+      "type": "jump",
+      "size": 4
+    },
+    {
+      "t_us": 10409973,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.24788369813171007
+    },
+    {
+      "t_us": 10603896,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.8341242688233618
+    },
+    {
+      "t_us": 10923590,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 11573087,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.30814207177976094
+    },
+    {
+      "t_us": 11574631,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.21583918572743022
+    },
+    {
+      "t_us": 11656163,
+      "type": "jump",
+      "size": -12
+    },
+    {
+      "t_us": 11850787,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.04946372041662661
+    },
+    {
+      "t_us": 11934707,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7618141159549067
+    },
+    {
+      "t_us": 11946844,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.33275524348189456
+    },
+    {
+      "t_us": 12092001,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.8152383679892996
+    },
+    {
+      "t_us": 12261011,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.6146707004618661
+    },
+    {
+      "t_us": 12479229,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.12092027321570664
+    },
+    {
+      "t_us": 12656222,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.4615795147978691
+    },
+    {
+      "t_us": 13490678,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 13524083,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 13940563,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 13967754,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.10328842496322421
+    },
+    {
+      "t_us": 14000007,
+      "type": "quote",
+      "bid": 9995,
+      "ask": 10001
+    },
+    {
+      "t_us": 14417925,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.18813140873436396
+    },
+    {
+      "t_us": 14485025,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.877569767940951
+    },
+    {
+      "t_us": 15004302,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.38734426176725956
+    },
+    {
+      "t_us": 15135116,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.20325029258841942
+    },
+    {
+      "t_us": 15148693,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.5683604504545676
+    },
+    {
+      "t_us": 15171314,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.36917583690423383
+    },
+    {
+      "t_us": 15494046,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.6658743559059026
+    },
+    {
+      "t_us": 15544134,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 15590512,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7108341579337929
+    },
+    {
+      "t_us": 15718226,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.16924224303676083
+    },
+    {
+      "t_us": 15718326,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.18447382389950295
+    },
+    {
+      "t_us": 16024920,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.5536085248378002
+    },
+    {
+      "t_us": 16158469,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.6765615889323819
+    },
+    {
+      "t_us": 16343355,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.5785807322800093
+    },
+    {
+      "t_us": 16395182,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.450602497801184
+    },
+    {
+      "t_us": 16655223,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7653683741509741
+    },
+    {
+      "t_us": 16852354,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.12132379197945242
+    },
+    {
+      "t_us": 17237041,
+      "type": "jump",
+      "size": 4
+    },
+    {
+      "t_us": 17298664,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.19266857498443302
+    },
+    {
+      "t_us": 19179941,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.9566732415134366
+    },
+    {
+      "t_us": 19431025,
+      "type": "jump",
+      "size": -1
+    },
+    {
+      "t_us": 19869831,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.41433261912686137
+    },
+    {
+      "t_us": 19929670,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.5623571255464404
+    },
+    {
+      "t_us": 20291478,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 20326469,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 20376757,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.280396544234649
+    },
+    {
+      "t_us": 20400221,
+      "type": "jump",
+      "size": -3
+    },
+    {
+      "t_us": 20607975,
+      "type": "jump",
+      "size": 10
+    },
+    {
+      "t_us": 20814902,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.440538920453587
+    },
+    {
+      "t_us": 20852589,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.20401154391154863
+    },
+    {
+      "t_us": 21000011,
+      "type": "quote",
+      "bid": 10001,
+      "ask": 10007
+    },
+    {
+      "t_us": 21098479,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 21107227,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.06805784713901453
+    },
+    {
+      "t_us": 21440434,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.5278430638122747
+    },
+    {
+      "t_us": 21851924,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.11516194363768484
+    },
+    {
+      "t_us": 22093493,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.17371367846903574
+    },
+    {
+      "t_us": 22433222,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 22784403,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.021176046526662273
+    },
+    {
+      "t_us": 22837121,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.23625332687514855
+    },
+    {
+      "t_us": 22918483,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.15625183166305512
+    },
+    {
+      "t_us": 23187224,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.12944707360103747
+    },
+    {
+      "t_us": 23232686,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 23620573,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.47448891711086105
+    },
+    {
+      "t_us": 23704800,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.42449082591520304
+    },
+    {
+      "t_us": 23779844,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 23785768,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.5631910359588327
+    },
+    {
+      "t_us": 23839930,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.6342847997702881
+    },
+    {
+      "t_us": 24020797,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 24763425,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 24839596,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.16342168305074112
+    },
+    {
+      "t_us": 25257439,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.49301325073784896
+    },
+    {
+      "t_us": 25357180,
+      "type": "jump",
+      "size": 4
+    },
+    {
+      "t_us": 25406587,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.5211021437854756
+    },
+    {
+      "t_us": 25930968,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.17307188361278159
+    },
+    {
+      "t_us": 25937396,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.9625044978586869
+    },
+    {
+      "t_us": 26074876,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.9938870603055093
+    },
+    {
+      "t_us": 26113691,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.8588560586320425
+    },
+    {
+      "t_us": 26118268,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.8226627257720637
+    },
+    {
+      "t_us": 26440941,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7016943196333323
+    },
+    {
+      "t_us": 26507509,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.9014102199699748
+    },
+    {
+      "t_us": 27040971,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.7261629433421346
+    },
+    {
+      "t_us": 27971107,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.1527681933959809
+    },
+    {
+      "t_us": 28000013,
+      "type": "quote",
+      "bid": 9996,
+      "ask": 10004
+    },
+    {
+      "t_us": 28258715,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.12804303335540346
+    },
+    {
+      "t_us": 28353474,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.3306697015979617
+    },
+    {
+      "t_us": 29028066,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 29222714,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.00858134951123768
+    },
+    {
+      "t_us": 29288049,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 29646948,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.08284439843322378
+    },
+    {
+      "t_us": 29808279,
+      "type": "jump",
+      "size": 8
+    },
+    {
+      "t_us": 29979081,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 30002694,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 30162626,
+      "type": "jump",
+      "size": 9
+    },
+    {
+      "t_us": 30820404,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.07725254403120585
+    },
+    {
+      "t_us": 30961917,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.8756145559728337
+    },
+    {
+      "t_us": 31358747,
+      "type": "jump",
+      "size": -1
+    },
+    {
+      "t_us": 31709012,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.47395784985416667
+    },
+    {
+      "t_us": 31751365,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.43406554027020705
+    },
+    {
+      "t_us": 31768083,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 32324651,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.24313716423120157
+    },
+    {
+      "t_us": 32624464,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.43764831771575663
+    },
+    {
+      "t_us": 32633600,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.9583604695399266
+    },
+    {
+      "t_us": 33527116,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.6380925102369905
+    },
+    {
+      "t_us": 33786780,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.2132591267609263
+    },
+    {
+      "t_us": 34425945,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.07506912038783087
+    },
+    {
+      "t_us": 34705926,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.38570082978409836
+    },
+    {
+      "t_us": 34819434,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.017809890837838793
+    },
+    {
+      "t_us": 35000017,
+      "type": "quote",
+      "bid": 10000,
+      "ask": 10006
+    },
+    {
+      "t_us": 35016141,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.6932298284823782
+    },
+    {
+      "t_us": 35374132,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.5918946274877248
+    },
+    {
+      "t_us": 35381633,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.027008953647844613
+    },
+    {
+      "t_us": 35830755,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 36103341,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 36309306,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.5595874426141239
+    },
+    {
+      "t_us": 36435956,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.18430829345916466
+    },
+    {
+      "t_us": 36545721,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 36865198,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 36899850,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.34241640955317354
+    },
+    {
+      "t_us": 37193092,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 37239497,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.9268116886209179
+    },
+    {
+      "t_us": 37369789,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 37467439,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.8757746067354958
+    },
+    {
+      "t_us": 37921270,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.985503239633842
+    },
+    {
+      "t_us": 38313482,
+      "type": "jump",
+      "size": 4
+    },
+    {
+      "t_us": 38369125,
+      "type": "jump",
+      "size": -1
+    },
+    {
+      "t_us": 38507336,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 38596988,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.8338499906537352
+    },
+    {
+      "t_us": 38945370,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.19734424225673775
+    },
+    {
+      "t_us": 38968195,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.40384560500192457
+    },
+    {
+      "t_us": 39117475,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.09261745329778492
+    },
+    {
+      "t_us": 39398381,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7089543350492878
+    },
+    {
+      "t_us": 39715904,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 40067322,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.7791206452954744
+    },
+    {
+      "t_us": 40154309,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.6826109337353414
+    },
+    {
+      "t_us": 40705348,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.1356252223647183
+    },
+    {
+      "t_us": 40737379,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.901262930998201
+    },
+    {
+      "t_us": 40947836,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 40966070,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.673235184697036
+    },
+    {
+      "t_us": 41223844,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.49920689499472404
+    },
+    {
+      "t_us": 41328903,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.16993887585245537
+    },
+    {
+      "t_us": 41482271,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.924988044464833
+    },
+    {
+      "t_us": 42000019,
+      "type": "quote",
+      "bid": 9994,
+      "ask": 10000
+    },
+    {
+      "t_us": 42045405,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 42156680,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.44292571200329345
+    },
+    {
+      "t_us": 42313623,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.09161298099589121
+    },
+    {
+      "t_us": 42405339,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.48653931091871216
+    },
+    {
+      "t_us": 42933767,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.10603265091799285
+    },
+    {
+      "t_us": 43009628,
+      "type": "jump",
+      "size": 2
+    },
+    {
+      "t_us": 43025600,
+      "type": "jump",
+      "size": 8
+    },
+    {
+      "t_us": 43408892,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 43418703,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.49569664116675827
+    },
+    {
+      "t_us": 44182853,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 44666974,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.46901236238384925
+    },
+    {
+      "t_us": 45015308,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.9228943345501083
+    },
+    {
+      "t_us": 45088288,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.8887750892661761
+    },
+    {
+      "t_us": 46508205,
+      "type": "jump",
+      "size": 2
+    },
+    {
+      "t_us": 46915766,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 47183501,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.3619031701862693
+    },
+    {
+      "t_us": 47393512,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 47515602,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.19054463837013913
+    },
+    {
+      "t_us": 47728795,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.7674575395296404
+    },
+    {
+      "t_us": 47753071,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 47779802,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 48263161,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.6372552154803426
+    },
+    {
+      "t_us": 48583550,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.9353844018252649
+    },
+    {
+      "t_us": 48651193,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.21982923996813808
+    },
+    {
+      "t_us": 48791510,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.569522335779858
+    },
+    {
+      "t_us": 48918516,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.958915572567957
+    },
+    {
+      "t_us": 48956312,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7089832261986465
+    },
+    {
+      "t_us": 49000023,
+      "type": "quote",
+      "bid": 9998,
+      "ask": 10006
+    },
+    {
+      "t_us": 49318324,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.21921853083400977
+    },
+    {
+      "t_us": 50087563,
+      "type": "jump",
+      "size": 1
+    },
+    {
+      "t_us": 50340305,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.3537505733787397
+    },
+    {
+      "t_us": 50860761,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 51335272,
+      "type": "jump",
+      "size": -6
+    },
+    {
+      "t_us": 51546013,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.35098549353793607
+    },
+    {
+      "t_us": 51626758,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.2024674830534372
+    },
+    {
+      "t_us": 52194032,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 52294165,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.5858391915654864
+    },
+    {
+      "t_us": 52335936,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.5492960818688046
+    },
+    {
+      "t_us": 53069333,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.43174294314445205
+    },
+    {
+      "t_us": 53087645,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7433843068435798
+    },
+    {
+      "t_us": 53253978,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 53664897,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.6290370581742647
+    },
+    {
+      "t_us": 53708673,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.43511027773050825
+    },
+    {
+      "t_us": 53745011,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.3264271791662876
+    },
+    {
+      "t_us": 54183153,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.31424855317890954
+    },
+    {
+      "t_us": 54311609,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.2678384972683209
+    },
+    {
+      "t_us": 54319493,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.24530727829205023
+    },
+    {
+      "t_us": 54389021,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.24691260311406182
+    },
+    {
+      "t_us": 54430850,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.41835599210669283
+    },
+    {
+      "t_us": 54553448,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.6201868727915113
+    },
+    {
+      "t_us": 54952236,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.952749687983384
+    },
+    {
+      "t_us": 55084450,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.24634306544160012
+    },
+    {
+      "t_us": 55090076,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 55108330,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.5399890787379534
+    },
+    {
+      "t_us": 55261784,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.8526516655366124
+    },
+    {
+      "t_us": 55419474,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.37533816674661047
+    },
+    {
+      "t_us": 55445668,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 55688302,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.35076573303800285
+    },
+    {
+      "t_us": 55772701,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.6373744597172192
+    },
+    {
+      "t_us": 55815789,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.07850108760842167
+    },
+    {
+      "t_us": 55909785,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 55998559,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.1980578976527675
+    },
+    {
+      "t_us": 56000027,
+      "type": "quote",
+      "bid": 9997,
+      "ask": 10003
+    },
+    {
+      "t_us": 56528173,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.30688464299225193
+    },
+    {
+      "t_us": 56572449,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.7188759850365092
+    },
+    {
+      "t_us": 56675521,
+      "type": "jump",
+      "size": 7
+    },
+    {
+      "t_us": 56719454,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.2392765817355279
+    },
+    {
+      "t_us": 56780236,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 56810581,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.37344326091887614
+    },
+    {
+      "t_us": 57007863,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.43561556985973526
+    },
+    {
+      "t_us": 57584831,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 57638117,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.8426879841721621
+    },
+    {
+      "t_us": 57896654,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 58087482,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 58189338,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.6643094054481951
+    },
+    {
+      "t_us": 58240347,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 58597478,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.7237919105160665
+    },
+    {
+      "t_us": 58603320,
+      "type": "jump",
+      "size": 1
+    },
+    {
+      "t_us": 58649608,
+      "type": "arrival",
+      "trader": "informed",
+      "side_intent": null,
+      "u_accept": null
+    },
+    {
+      "t_us": 59313446,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "buy",
+      "u_accept": 0.4009709486353251
+    },
+    {
+      "t_us": 59646200,
+      "type": "arrival",
+      "trader": "noise",
+      "side_intent": "sell",
+      "u_accept": 0.8093267069346463
+    }
+  ],
+  "expected_output": {
+    "fills": [
+      {
+        "t_us": 548477,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": 3
+      },
+      {
+        "t_us": 1936557,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": 7
+      },
+      {
+        "t_us": 3089429,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": -1
+      },
+      {
+        "t_us": 3238509,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": 7
+      },
+      {
+        "t_us": 3383718,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": -1
+      },
+      {
+        "t_us": 3454345,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": 7
+      },
+      {
+        "t_us": 3701059,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": -1
+      },
+      {
+        "t_us": 4234040,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": -1
+      },
+      {
+        "t_us": 5325431,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 5766155,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 3,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 6267036,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 7,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 6695082,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10000,
+        "trader": "noise",
+        "markout_1s": 7,
+        "markout_5s": -8
+      },
+      {
+        "t_us": 6873675,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10004,
+        "trader": "informed",
+        "markout_1s": -1,
+        "markout_5s": 14
+      },
+      {
+        "t_us": 6923707,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10004,
+        "trader": "informed",
+        "markout_1s": -1,
+        "markout_5s": 14
+      },
+      {
+        "t_us": 6927054,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10004,
+        "trader": "noise",
+        "markout_1s": 7,
+        "markout_5s": -8
+      },
+      {
+        "t_us": 7319591,
+        "side": "buy",
+        "price": 10005,
+        "v_at_fill": 10004,
+        "trader": "noise",
+        "markout_1s": 1,
+        "markout_5s": 16
+      },
+      {
+        "t_us": 9542393,
+        "side": "buy",
+        "price": 10005,
+        "v_at_fill": 10004,
+        "trader": "noise",
+        "markout_1s": 4,
+        "markout_5s": 16
+      },
+      {
+        "t_us": 9554933,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 10004,
+        "trader": "noise",
+        "markout_1s": 2,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 9634506,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 10004,
+        "trader": "noise",
+        "markout_1s": 2,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 10012821,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9997,
+        "trader": "informed",
+        "markout_1s": 2,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 10079565,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9997,
+        "trader": "informed",
+        "markout_1s": 2,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 10120262,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9997,
+        "trader": "noise",
+        "markout_1s": 2,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 10228960,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9997,
+        "trader": "informed",
+        "markout_1s": 2,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 10409973,
+        "side": "buy",
+        "price": 10005,
+        "v_at_fill": 10001,
+        "trader": "noise",
+        "markout_1s": 4,
+        "markout_5s": 16
+      },
+      {
+        "t_us": 11573087,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 10001,
+        "trader": "noise",
+        "markout_1s": -10,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 11574631,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 10001,
+        "trader": "noise",
+        "markout_1s": -10,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 11850787,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": -10,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 11946844,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": -10,
+        "markout_5s": -10
+      },
+      {
+        "t_us": 12479229,
+        "side": "buy",
+        "price": 10005,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": 16,
+        "markout_5s": 12
+      },
+      {
+        "t_us": 12656222,
+        "side": "buy",
+        "price": 10005,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": 16,
+        "markout_5s": 12
+      },
+      {
+        "t_us": 13490678,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9989,
+        "trader": "informed",
+        "markout_1s": -10,
+        "markout_5s": -6
+      },
+      {
+        "t_us": 13524083,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9989,
+        "trader": "informed",
+        "markout_1s": -10,
+        "markout_5s": -6
+      },
+      {
+        "t_us": 13940563,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9989,
+        "trader": "informed",
+        "markout_1s": -10,
+        "markout_5s": -6
+      },
+      {
+        "t_us": 13967754,
+        "side": "sell",
+        "price": 9999,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": -10,
+        "markout_5s": -6
+      },
+      {
+        "t_us": 14417925,
+        "side": "buy",
+        "price": 10001,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": 12,
+        "markout_5s": 8
+      },
+      {
+        "t_us": 15004302,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": -6,
+        "markout_5s": -3
+      },
+      {
+        "t_us": 15135116,
+        "side": "buy",
+        "price": 10001,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": 12,
+        "markout_5s": 9
+      },
+      {
+        "t_us": 15171314,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": -6,
+        "markout_5s": -3
+      },
+      {
+        "t_us": 15544134,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9989,
+        "trader": "informed",
+        "markout_1s": -6,
+        "markout_5s": -6
+      },
+      {
+        "t_us": 15718226,
+        "side": "buy",
+        "price": 10001,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": 12,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 15718326,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": -6,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 16395182,
+        "side": "buy",
+        "price": 10001,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": 8,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 16852354,
+        "side": "buy",
+        "price": 10001,
+        "v_at_fill": 9989,
+        "trader": "noise",
+        "markout_1s": 8,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 17298664,
+        "side": "buy",
+        "price": 10001,
+        "v_at_fill": 9993,
+        "trader": "noise",
+        "markout_1s": 8,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 19869831,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9992,
+        "trader": "noise",
+        "markout_1s": 4,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 20291478,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9992,
+        "trader": "informed",
+        "markout_1s": 4,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 20326469,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9992,
+        "trader": "informed",
+        "markout_1s": 4,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 20376757,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9992,
+        "trader": "noise",
+        "markout_1s": 4,
+        "markout_5s": 8
+      },
+      {
+        "t_us": 20814902,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": 4,
+        "markout_5s": 8
+      },
+      {
+        "t_us": 20852589,
+        "side": "sell",
+        "price": 9995,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": 4,
+        "markout_5s": 8
+      },
+      {
+        "t_us": 21098479,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "informed",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 21107227,
+        "side": "buy",
+        "price": 10007,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": 8,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 21851924,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 22093493,
+        "side": "buy",
+        "price": 10007,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": 8,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 22433222,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "informed",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 22784403,
+        "side": "buy",
+        "price": 10007,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": 8,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 22837121,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 22918483,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 23187224,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 23232686,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "informed",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 23704800,
+        "side": "buy",
+        "price": 10007,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": 8,
+        "markout_5s": 4
+      },
+      {
+        "t_us": 23779844,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "informed",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 24020797,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "informed",
+        "markout_1s": -2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 24763425,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "informed",
+        "markout_1s": 2,
+        "markout_5s": 2
+      },
+      {
+        "t_us": 24839596,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 9999,
+        "trader": "noise",
+        "markout_1s": 2,
+        "markout_5s": 10
+      },
+      {
+        "t_us": 25930968,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 10003,
+        "trader": "noise",
+        "markout_1s": 2,
+        "markout_5s": 19
+      },
+      {
+        "t_us": 27971107,
+        "side": "sell",
+        "price": 10001,
+        "v_at_fill": 10003,
+        "trader": "noise",
+        "markout_1s": 2,
+        "markout_5s": 18
+      },
+      {
+        "t_us": 28258715,
+        "side": "sell",
+        "price": 9996,
+        "v_at_fill": 10003,
+        "trader": "noise",
+        "markout_1s": 7,
+        "markout_5s": 23
+      },
+      {
+        "t_us": 28353474,
+        "side": "sell",
+        "price": 9996,
+        "v_at_fill": 10003,
+        "trader": "noise",
+        "markout_1s": 7,
+        "markout_5s": 23
+      },
+      {
+        "t_us": 29222714,
+        "side": "sell",
+        "price": 9996,
+        "v_at_fill": 10003,
+        "trader": "noise",
+        "markout_1s": 24,
+        "markout_5s": 23
+      },
+      {
+        "t_us": 29646948,
+        "side": "buy",
+        "price": 10004,
+        "v_at_fill": 10003,
+        "trader": "noise",
+        "markout_1s": -16,
+        "markout_5s": -15
+      },
+      {
+        "t_us": 29979081,
+        "side": "buy",
+        "price": 10004,
+        "v_at_fill": 10011,
+        "trader": "informed",
+        "markout_1s": -16,
+        "markout_5s": -15
+      },
+      {
+        "t_us": 30002694,
+        "side": "buy",
+        "price": 10004,
+        "v_at_fill": 10011,
+        "trader": "informed",
+        "markout_1s": -16,
+        "markout_5s": -15
+      },
+      {
+        "t_us": 30820404,
+        "side": "sell",
+        "price": 9996,
+        "v_at_fill": 10020,
+        "trader": "noise",
+        "markout_1s": 23,
+        "markout_5s": 23
+      },
+      {
+        "t_us": 31768083,
+        "side": "buy",
+        "price": 10004,
+        "v_at_fill": 10019,
+        "trader": "informed",
+        "markout_1s": -15,
+        "markout_5s": -15
+      },
+      {
+        "t_us": 32324651,
+        "side": "buy",
+        "price": 10004,
+        "v_at_fill": 10019,
+        "trader": "noise",
+        "markout_1s": -15,
+        "markout_5s": -15
+      },
+      {
+        "t_us": 33786780,
+        "side": "sell",
+        "price": 9996,
+        "v_at_fill": 10019,
+        "trader": "noise",
+        "markout_1s": 23,
+        "markout_5s": 26
+      },
+      {
+        "t_us": 34425945,
+        "side": "sell",
+        "price": 9996,
+        "v_at_fill": 10019,
+        "trader": "noise",
+        "markout_1s": 23,
+        "markout_5s": 26
+      },
+      {
+        "t_us": 34819434,
+        "side": "buy",
+        "price": 10004,
+        "v_at_fill": 10019,
+        "trader": "noise",
+        "markout_1s": -15,
+        "markout_5s": -18
+      },
+      {
+        "t_us": 35381633,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10019,
+        "trader": "noise",
+        "markout_1s": -13,
+        "markout_5s": -16
+      },
+      {
+        "t_us": 35830755,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10019,
+        "trader": "informed",
+        "markout_1s": -13,
+        "markout_5s": -16
+      },
+      {
+        "t_us": 36103341,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10019,
+        "trader": "informed",
+        "markout_1s": -13,
+        "markout_5s": -16
+      },
+      {
+        "t_us": 36435956,
+        "side": "sell",
+        "price": 10000,
+        "v_at_fill": 10019,
+        "trader": "noise",
+        "markout_1s": 19,
+        "markout_5s": 22
+      },
+      {
+        "t_us": 36545721,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10019,
+        "trader": "informed",
+        "markout_1s": -13,
+        "markout_5s": -16
+      },
+      {
+        "t_us": 36865198,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10019,
+        "trader": "informed",
+        "markout_1s": -13,
+        "markout_5s": -16
+      },
+      {
+        "t_us": 36899850,
+        "side": "sell",
+        "price": 10000,
+        "v_at_fill": 10019,
+        "trader": "noise",
+        "markout_1s": 19,
+        "markout_5s": 22
+      },
+      {
+        "t_us": 37193092,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10019,
+        "trader": "informed",
+        "markout_1s": -13,
+        "markout_5s": -16
+      },
+      {
+        "t_us": 37369789,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10019,
+        "trader": "informed",
+        "markout_1s": -16,
+        "markout_5s": -16
+      },
+      {
+        "t_us": 38507336,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10022,
+        "trader": "informed",
+        "markout_1s": -16,
+        "markout_5s": -26
+      },
+      {
+        "t_us": 38945370,
+        "side": "sell",
+        "price": 10000,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": 22,
+        "markout_5s": 32
+      },
+      {
+        "t_us": 38968195,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": -16,
+        "markout_5s": -26
+      },
+      {
+        "t_us": 39117475,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": -16,
+        "markout_5s": -26
+      },
+      {
+        "t_us": 39715904,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10022,
+        "trader": "informed",
+        "markout_1s": -16,
+        "markout_5s": -26
+      },
+      {
+        "t_us": 40705348,
+        "side": "sell",
+        "price": 10000,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": 22,
+        "markout_5s": 32
+      },
+      {
+        "t_us": 40947836,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10022,
+        "trader": "informed",
+        "markout_1s": -16,
+        "markout_5s": -26
+      },
+      {
+        "t_us": 41328903,
+        "side": "sell",
+        "price": 10000,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": 22,
+        "markout_5s": 32
+      },
+      {
+        "t_us": 42045405,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10022,
+        "trader": "informed",
+        "markout_1s": -32,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 42156680,
+        "side": "sell",
+        "price": 9994,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": 38,
+        "markout_5s": 40
+      },
+      {
+        "t_us": 42313623,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": -32,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 42933767,
+        "side": "sell",
+        "price": 9994,
+        "v_at_fill": 10022,
+        "trader": "noise",
+        "markout_1s": 38,
+        "markout_5s": 40
+      },
+      {
+        "t_us": 43408892,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10032,
+        "trader": "informed",
+        "markout_1s": -32,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 44182853,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10032,
+        "trader": "informed",
+        "markout_1s": -32,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 44666974,
+        "side": "sell",
+        "price": 9994,
+        "v_at_fill": 10032,
+        "trader": "noise",
+        "markout_1s": 38,
+        "markout_5s": 40
+      },
+      {
+        "t_us": 46915766,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10034,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -29
+      },
+      {
+        "t_us": 47183501,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10034,
+        "trader": "noise",
+        "markout_1s": -34,
+        "markout_5s": -29
+      },
+      {
+        "t_us": 47393512,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10034,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -29
+      },
+      {
+        "t_us": 47515602,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10034,
+        "trader": "noise",
+        "markout_1s": -34,
+        "markout_5s": -29
+      },
+      {
+        "t_us": 47753071,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10034,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -29
+      },
+      {
+        "t_us": 47779802,
+        "side": "buy",
+        "price": 10000,
+        "v_at_fill": 10034,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -29
+      },
+      {
+        "t_us": 48651193,
+        "side": "sell",
+        "price": 9994,
+        "v_at_fill": 10034,
+        "trader": "noise",
+        "markout_1s": 40,
+        "markout_5s": 35
+      },
+      {
+        "t_us": 49318324,
+        "side": "sell",
+        "price": 9998,
+        "v_at_fill": 10034,
+        "trader": "noise",
+        "markout_1s": 37,
+        "markout_5s": 31
+      },
+      {
+        "t_us": 50340305,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10035,
+        "trader": "noise",
+        "markout_1s": -23,
+        "markout_5s": -23
+      },
+      {
+        "t_us": 50860761,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10035,
+        "trader": "informed",
+        "markout_1s": -23,
+        "markout_5s": -23
+      },
+      {
+        "t_us": 51546013,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -23,
+        "markout_5s": -23
+      },
+      {
+        "t_us": 51626758,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -23,
+        "markout_5s": -23
+      },
+      {
+        "t_us": 52194032,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "informed",
+        "markout_1s": -23,
+        "markout_5s": -30
+      },
+      {
+        "t_us": 53253978,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "informed",
+        "markout_1s": -23,
+        "markout_5s": -30
+      },
+      {
+        "t_us": 53745011,
+        "side": "sell",
+        "price": 9998,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": 31,
+        "markout_5s": 39
+      },
+      {
+        "t_us": 54183153,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -23,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 54311609,
+        "side": "sell",
+        "price": 9998,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": 31,
+        "markout_5s": 39
+      },
+      {
+        "t_us": 54319493,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -23,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 54389021,
+        "side": "sell",
+        "price": 9998,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": 31,
+        "markout_5s": 39
+      },
+      {
+        "t_us": 55084450,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -23,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 55090076,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "informed",
+        "markout_1s": -23,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 55445668,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "informed",
+        "markout_1s": -23,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 55688302,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -30,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 55815789,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -30,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 55909785,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "informed",
+        "markout_1s": -30,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 55998559,
+        "side": "buy",
+        "price": 10006,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": -30,
+        "markout_5s": -31
+      },
+      {
+        "t_us": 56528173,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10029,
+        "trader": "noise",
+        "markout_1s": 39,
+        "markout_5s": 40
+      },
+      {
+        "t_us": 56719454,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10036,
+        "trader": "noise",
+        "markout_1s": -33,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 56780236,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10036,
+        "trader": "informed",
+        "markout_1s": -33,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 56810581,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10036,
+        "trader": "noise",
+        "markout_1s": -33,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 57007863,
+        "side": "sell",
+        "price": 9997,
+        "v_at_fill": 10036,
+        "trader": "noise",
+        "markout_1s": 39,
+        "markout_5s": 40
+      },
+      {
+        "t_us": 57584831,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10036,
+        "trader": "informed",
+        "markout_1s": -33,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 57896654,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10036,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 58087482,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10036,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 58240347,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10036,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 58649608,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10037,
+        "trader": "informed",
+        "markout_1s": -34,
+        "markout_5s": -34
+      },
+      {
+        "t_us": 59313446,
+        "side": "buy",
+        "price": 10003,
+        "v_at_fill": 10037,
+        "trader": "noise",
+        "markout_1s": -34,
+        "markout_5s": -34
+      }
+    ],
+    "declines": [
+      {
+        "t_us": 292213,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 3563892,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 4245016,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 4506948,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 5072391,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 5649350,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 5851222,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 7623633,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 7753719,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 8059316,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 8091187,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 8755469,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 9127543,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 9268147,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 9481103,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 9553798,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 9671979,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 9905454,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 10039111,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 10603896,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 10923590,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 11934707,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 12092001,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 12261011,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 14485025,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 15148693,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 15494046,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 15590512,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 16024920,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 16158469,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 16343355,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 16655223,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 19179941,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 19929670,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 21440434,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 23620573,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 23785768,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 23839930,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 25257439,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 25406587,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 25937396,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 26074876,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 26113691,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 26118268,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 26440941,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 26507509,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 27040971,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 29028066,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 29288049,
+        "trader": "informed",
+        "side_intent": null,
+        "reason": "v_inside_quotes"
+      },
+      {
+        "t_us": 30961917,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 31709012,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 31751365,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 32624464,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 32633600,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 33527116,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 34705926,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 35016141,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 35374132,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 36309306,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 37239497,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 37467439,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 37921270,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 38596988,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 39398381,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 40067322,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 40154309,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 40737379,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 40966070,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 41223844,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 41482271,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 42405339,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 43418703,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 45015308,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 45088288,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 47728795,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 48263161,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 48583550,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 48791510,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 48918516,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 48956312,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 52294165,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 52335936,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 53069333,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 53087645,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 53664897,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 53708673,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 54430850,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 54553448,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 54952236,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 55108330,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 55261784,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 55419474,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 55772701,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 56572449,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 57638117,
+        "trader": "noise",
+        "side_intent": "buy",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 58189338,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 58597478,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      },
+      {
+        "t_us": 59646200,
+        "trader": "noise",
+        "side_intent": "sell",
+        "reason": "balked_at_spread"
+      }
+    ],
+    "v_terminal": 10037,
+    "inventory_terminal": -8,
+    "cash_terminal": 80430,
+    "pnl_decomposition_half_ticks": {
+      "total": 268,
+      "spread_captured": 902,
+      "adverse_selection": -2080,
+      "inventory_cost": 1446
+    }
+  }
+}

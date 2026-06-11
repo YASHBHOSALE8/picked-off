@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "name": "empty_round",
+    "description": "No arrivals, no jumps: the identity holds at all-zeros.",
+    "seed": 0,
+    "params": {
+      "v0": 10000,
+      "round_us": 60000000,
+      "lambda_j": 0.5,
+      "p_jump": 0.2,
+      "lambda_a": 4.0,
+      "alpha": 0.3,
+      "delta0": 4.0
+    }
+  },
+  "event_stream": [
+    {
+      "t_us": 0,
+      "type": "quote",
+      "bid": 9997,
+      "ask": 10003
+    }
+  ],
+  "expected_output": {
+    "fills": [],
+    "declines": [],
+    "v_terminal": 10000,
+    "inventory_terminal": 0,
+    "cash_terminal": 0,
+    "pnl_decomposition_half_ticks": {
+      "total": 0,
+      "spread_captured": 0,
+      "adverse_selection": 0,
+      "inventory_cost": 0
+    }
+  }
+}
