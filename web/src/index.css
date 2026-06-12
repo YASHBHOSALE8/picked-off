@@ -253,6 +253,73 @@ b {
 
 .replay-detail p { margin: 4px 0; }
 
+/* --- home ----------------------------------------------------------------- */
+
+.screen.home {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  justify-content: center;
+}
+
+.home-title {
+  font-size: 34px;
+  letter-spacing: 0.45em;
+  margin: 0 0 0 0.45em; /* visually re-center the tracked text */
+  font-weight: 600;
+}
+
+.home-pitch {
+  color: var(--dim);
+  max-width: 480px;
+  margin: 0;
+}
+
+.home-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.home-foot {
+  padding-bottom: 14px;
+}
+
+.home-link {
+  align-self: flex-start;
+  margin: 2px 0 0;
+}
+
+/* --- leave-round confirm --------------------------------------------------- */
+
+.confirm-dialog {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg) 65%, transparent);
+  z-index: 10;
+}
+
+.confirm-dialog .tutorial-card {
+  position: fixed;
+}
+
+.confirm-dialog .btn-row {
+  padding-bottom: 0;
+}
+
+.btn.exit-btn {
+  margin-left: 0; /* beats .help-btn's margin-left: auto (higher specificity) */
+  margin-right: 4px;
+}
+
 /* --- help + tutorial ----------------------------------------------------- */
 
 .help-btn {

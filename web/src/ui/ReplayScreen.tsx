@@ -34,10 +34,12 @@ export function ReplayScreen({
   round,
   onBack,
   onMenu,
+  onHome,
 }: {
   round: FinishedRound;
   onBack: () => void;
   onMenu: () => void;
+  onHome: () => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const T = round.result.params.round_us;
@@ -45,6 +47,9 @@ export function ReplayScreen({
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(4);
   const [selected, setSelected] = useState<number | null>(null);
+  // Decline markers clutter badly at L4/L5 (~100+ walk-aways): default to
+  // pick-offs-only there (REPORT3 rough edge (a)).
+  const [markers, setMarkers] = useState<"pickoffs" | "all">(round.level >= 4 ? "pickoffs" : "all");
   const scrubRef = useRef(scrub);
   scrubRef.current = scrub;
 
@@ -148,8 +153,8 @@ export function ReplayScreen({
     ctx.lineTo(xOf(Math.min(t, T)), yOf(v));
     ctx.stroke();
 
-    // declines (§1.4 reveal)
-    for (const d of r.declines) {
+    // declines (§1.4 reveal) — hidden in pick-offs-only marker mode
+    for (const d of markers === "all" ? r.declines : []) {
       if (d.t_us > t) continue;
       const x = xOf(d.t_us);
       if (d.trader === "informed") {
@@ -212,7 +217,7 @@ export function ReplayScreen({
     ctx.lineTo(cx, h);
     ctx.stroke();
     ctx.globalAlpha = 1;
-  }, [round, T, selected]);
+  }, [round, T, selected, markers]);
 
   useEffect(() => {
     let raf = 0;
@@ -283,6 +288,13 @@ export function ReplayScreen({
           {playing ? "Pause" : "Play"}
         </button>
         <button className="btn" onClick={() => setSpeed((s) => (s === 4 ? 1 : 4))}>{speed}×</button>
+        <button
+          className="btn"
+          onClick={() => setMarkers((m) => (m === "all" ? "pickoffs" : "all"))}
+          title="Decline-marker density"
+        >
+          {markers === "all" ? "all markers" : "pick-offs only"}
+        </button>
         <input
           className="scrub"
           type="range"
@@ -310,9 +322,11 @@ export function ReplayScreen({
           </p>
         ) : (
           <p className="dim">
-            White line: the fair value you never saw. Red squares: informed traders who looked at
-            your quotes and <i>declined</i> — V was inside. Grey ×: noise that balked at your
-            spread. Red rings: fills that picked you off. Tap a fill for its anatomy.
+            White line: the fair value you never saw. Red rings: fills that picked you off.
+            {markers === "all"
+              ? " Red squares: informed traders who looked and declined — V was inside. Grey ×: noise that balked at your spread."
+              : " Decline markers hidden — switch to “all markers” to see who walked away."}{" "}
+            Tap a fill for its anatomy.
           </p>
         )}
       </div>
@@ -322,6 +336,9 @@ export function ReplayScreen({
         </button>
         <button className="btn" onClick={onMenu}>
           Levels
+        </button>
+        <button className="btn" onClick={onHome}>
+          Home
         </button>
         <button className="btn" onClick={() => downloadSession(round)}>
           Download my session

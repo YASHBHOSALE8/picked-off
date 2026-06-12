@@ -1,13 +1,12 @@
 /**
- * The 60-second live round (DESIGN.md §7.3): scrolling price canvas, fills
- * as side-colored flashes, bid/ask draggable by touch OR nudged by keyboard
- * (keys.ts; same D11 injection path as dragging). Censored feed: no V, no
- * declines, no trader types, no AS/IC — spread captured is the only live
- * PnL component (anything else would leak the hidden V, §1.4).
+ * The live round (DESIGN.md §7.3): scrolling price canvas, side-colored fill
+ * flashes, bid/ask draggable by touch or nudged by keyboard (keys.ts; same
+ * D11 injection path). Censored feed: no V, no declines, no trader types,
+ * no AS/IC (§1.4) — spread captured is the only live PnL component.
  *
- * Tutorial mode (props.tutorial): same screen, scripted stream, pausable
- * clock — step cards freeze game time until dismissed. The tutorial may
- * peek at fill.trader (it is a teaching tool); the live HUD/canvas never do.
+ * Pausing is depth-counted and shared by tutorial cards and the app-level
+ * freeze (the leave-round confirm dialog): while paused the game clock,
+ * input, and event processing all hold.
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -40,11 +39,15 @@ export function LiveScreen({
   onDone,
   tutorial = false,
   onSkip,
+  onExit,
+  frozen = false,
 }: {
   round: LiveRound;
   onDone: (f: FinishedRound) => void;
   tutorial?: boolean;
   onSkip?: () => void;
+  onExit?: () => void;
+  frozen?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [phase, setPhase] = useState<"arm" | "run">("arm");
@@ -54,8 +57,9 @@ export function LiveScreen({
   const [card, setCard] = useState<TutorialCard | null>(null);
 
   const t0Ref = useRef(0);
-  const pausedAccumRef = useRef(0); // ms spent inside tutorial cards
+  const pauseDepthRef = useRef(0);
   const pauseStartRef = useRef(0);
+  const pausedAccumRef = useRef(0);
   const cardRef = useRef<TutorialCard | null>(null);
   const shownRef = useRef<Set<string>>(new Set());
   const lastFillCountRef = useRef(0);
@@ -66,33 +70,57 @@ export function LiveScreen({
   phaseRef.current = phase;
   const keyHints = useRef(hasFinePointer()).current;
 
+  const pausePush = useCallback(() => {
+    if (pauseDepthRef.current === 0) pauseStartRef.current = performance.now();
+    pauseDepthRef.current += 1;
+  }, []);
+
+  const pausePop = useCallback(() => {
+    pauseDepthRef.current = Math.max(0, pauseDepthRef.current - 1);
+    if (pauseDepthRef.current === 0) {
+      pausedAccumRef.current += performance.now() - pauseStartRef.current;
+    }
+  }, []);
+
+  // App-level freeze (leave-confirm dialog) participates in the same pause.
+  const frozenRef = useRef(false);
+  useEffect(() => {
+    if (frozen && !frozenRef.current) {
+      frozenRef.current = true;
+      pausePush();
+    } else if (!frozen && frozenRef.current) {
+      frozenRef.current = false;
+      pausePop();
+    }
+  }, [frozen, pausePush, pausePop]);
+
   const gameT = useCallback((): number => {
     if (phaseRef.current !== "run") return 0;
-    const now = cardRef.current ? pauseStartRef.current : performance.now();
+    const now = pauseDepthRef.current > 0 ? pauseStartRef.current : performance.now();
     return Math.min(Math.floor((now - t0Ref.current - pausedAccumRef.current) * 1000), round.params.round_us);
   }, [round]);
 
-  const showCard = useCallback((c: TutorialCard) => {
-    if (shownRef.current.has(c.id)) return;
-    shownRef.current.add(c.id);
-    pauseStartRef.current = performance.now();
-    cardRef.current = c;
-    setCard(c);
-  }, []);
+  const showCard = useCallback(
+    (c: TutorialCard) => {
+      if (shownRef.current.has(c.id)) return;
+      shownRef.current.add(c.id);
+      pausePush();
+      cardRef.current = c;
+      setCard(c);
+    },
+    [pausePush],
+  );
 
   const dismissCard = useCallback(() => {
     const c = cardRef.current;
     cardRef.current = null;
     setCard(null);
-    if (c?.id === "end") {
-      if (!doneRef.current) {
-        doneRef.current = true;
-        onDone(round.finish());
-      }
-      return;
+    pausePop();
+    if (c?.id === "end" && !doneRef.current) {
+      doneRef.current = true;
+      onDone(round.finish());
     }
-    pausedAccumRef.current += performance.now() - pauseStartRef.current;
-  }, [onDone, round]);
+  }, [onDone, round, pausePop]);
 
   // ---- quote mutation (shared by drag + keyboard; same engine path) -------
 
@@ -114,7 +142,7 @@ export function LiveScreen({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (cardRef.current) return; // tutorial card open
+      if (pauseDepthRef.current > 0) return;
       const step = e.shiftKey ? KEY_STEP_SHIFT : KEY_STEP;
       const k = e.key.toLowerCase();
       let { bid, ask } = round;
@@ -154,7 +182,6 @@ export function LiveScreen({
     const yOf = (price: number) => ((top - price) / VIEW_SPAN_TICKS) * h;
     const xOf = (t: number) => w - ((now - t) / VIEW_WINDOW_US) * w;
 
-    // grid
     ctx.font = "10px ui-monospace, Menlo, monospace";
     ctx.fillStyle = COLORS.dim;
     ctx.strokeStyle = COLORS.rule;
@@ -172,7 +199,6 @@ export function LiveScreen({
       ctx.fillText(priceToUsd(p), w - 52, y - 3);
     }
 
-    // fills: side-colored dots fading over 3 s (censored: side only)
     for (let i = round.fills.length - 1; i >= 0; i--) {
       const f = round.fills[i];
       if (now - f.t_us > VIEW_WINDOW_US) break;
@@ -185,7 +211,6 @@ export function LiveScreen({
       ctx.globalAlpha = 1;
     }
 
-    // own quotes: draggable lines with handles (+ key hints on fine pointers)
     for (const [price, color, label, hint] of [
       [round.ask, COLORS.ask, "ASK", KEY_HINTS.ask],
       [round.bid, COLORS.bid, "BID", KEY_HINTS.bid],
@@ -208,11 +233,6 @@ export function LiveScreen({
         ctx.fillText(hint, 84, y + 4);
       }
     }
-    if (keyHints) {
-      ctx.fillStyle = COLORS.dim;
-      ctx.font = "10px ui-monospace, Menlo, monospace";
-      ctx.fillText(KEY_HINTS.modifier, 4, h - 6);
-    }
   }, [round, gameT, keyHints]);
 
   // ---- main loop -----------------------------------------------------------
@@ -220,13 +240,12 @@ export function LiveScreen({
   useEffect(() => {
     let raf = 0;
     const loop = () => {
-      if (phaseRef.current === "run" && !doneRef.current && !cardRef.current) {
+      if (phaseRef.current === "run" && !doneRef.current && pauseDepthRef.current === 0) {
         const now = gameT();
         round.advanceTo(now);
 
         if (tutorial) {
-          // fill-driven cards
-          while (lastFillCountRef.current < round.fills.length) {
+          while (lastFillCountRef.current < round.fills.length && pauseDepthRef.current === 0) {
             const f = round.fills[lastFillCountRef.current];
             lastFillCountRef.current += 1;
             if (f.trader === "informed") {
@@ -242,9 +261,8 @@ export function LiveScreen({
               break;
             }
           }
-          // the informed arrival declined -> the silence lesson
           if (
-            !cardRef.current &&
+            pauseDepthRef.current === 0 &&
             now >= NOPICKOFF_FALLBACK_T_US &&
             !shownRef.current.has("pickoff") &&
             !shownRef.current.has("nopickoff")
@@ -253,7 +271,7 @@ export function LiveScreen({
           }
         }
 
-        if (!cardRef.current) {
+        if (pauseDepthRef.current === 0) {
           const next: Hud = {
             secsLeft: Math.ceil((round.params.round_us - now) / 1_000_000),
             position: round.position,
@@ -290,7 +308,7 @@ export function LiveScreen({
 
   const onPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
-    if (!canvas || cardRef.current) return;
+    if (!canvas || pauseDepthRef.current > 0) return;
     const rect = canvas.getBoundingClientRect();
     const y = e.clientY - rect.top;
     const h = rect.height;
@@ -307,7 +325,7 @@ export function LiveScreen({
   const onPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const which = dragRef.current;
     const canvas = canvasRef.current;
-    if (!which || !canvas) return;
+    if (!which || !canvas || pauseDepthRef.current > 0) return;
     const rect = canvas.getBoundingClientRect();
     const top = centerRef.current + VIEW_SPAN_TICKS / 2;
     const price = Math.round(top - ((e.clientY - rect.top) / rect.height) * VIEW_SPAN_TICKS);
@@ -332,6 +350,11 @@ export function LiveScreen({
   return (
     <div className="screen live">
       <div className="hud">
+        {onExit && (
+          <button className="btn help-btn exit-btn" onClick={onExit} title="Leave the round">
+            ←
+          </button>
+        )}
         <span className="hud-item hud-clock">{clockMmSs(hud.secsLeft * 1_000_000)}</span>
         <span className="hud-item">{tutorial ? "TUTORIAL" : `L${round.doc.level}`}</span>
         <span className="hud-item">
@@ -341,6 +364,7 @@ export function LiveScreen({
           spread captured <b className={hud.scHalf >= 0 ? "pos" : "neg"}>{halfTicksToUsd(hud.scHalf)}</b>
         </span>
         <span className="hud-item dim">AS / IC revealed at close</span>
+        {keyHints && <span className="hud-item dim">{KEY_HINTS.modifier}</span>}
         <button
           className={`btn help-btn ${helpOpen ? "primary" : ""}`}
           onClick={() => setHelpOpen((o) => !o)}

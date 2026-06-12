@@ -31,14 +31,19 @@ const LEVEL_COPY: Record<number, { name: string; copy: string; edge: string }> =
 export function LevelSelect({
   onPick,
   onTutorial,
+  onHome,
 }: {
   onPick: (level: number) => void;
   onTutorial: () => void;
+  onHome: () => void;
 }) {
   return (
     <div className="screen menu">
+      <button className="link-btn home-link" onClick={onHome}>
+        ← Home
+      </button>
       <header className="masthead">
-        <h1>PICKED OFF</h1>
+        <h1>PICK A LEVEL</h1>
         <p className="sub">
           You are the dealer. Quote a two-sided market against a hidden fair value. Part of the
           flow knows it exactly — and the ones who walk away without trading are telling you

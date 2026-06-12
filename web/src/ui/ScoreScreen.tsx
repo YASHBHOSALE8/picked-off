@@ -49,11 +49,13 @@ export function ScoreScreen({
   onReplay,
   onAgain,
   onMenu,
+  onHome,
 }: {
   round: FinishedRound;
   onReplay: () => void;
   onAgain: () => void;
   onMenu: () => void;
+  onHome: () => void;
 }) {
   const d = round.decomp;
   const r = round.result;
@@ -62,6 +64,9 @@ export function ScoreScreen({
   const n = notes(round);
   return (
     <div className="screen score">
+      <button className="link-btn home-link" onClick={onHome}>
+        ← Home
+      </button>
       <h2>{isTutorial ? "PRACTICE CLOSED" : `ROUND CLOSED — L${round.level}`}</h2>
       <div className={`score-total ${d.total >= 0 ? "pos" : "neg"}`}>{halfTicksToUsd(d.total)}</div>
       <div className="score-sub">
@@ -84,6 +89,9 @@ export function ScoreScreen({
         </button>
         <button className="btn" onClick={onMenu}>
           Levels
+        </button>
+        <button className="btn" onClick={onHome}>
+          Home
         </button>
         <button className="btn" onClick={() => downloadSession(round)}>
           Download my session
