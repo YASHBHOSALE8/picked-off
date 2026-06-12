@@ -28,7 +28,13 @@ const LEVEL_COPY: Record<number, { name: string; copy: string; edge: string }> =
   },
 };
 
-export function LevelSelect({ onPick }: { onPick: (level: number) => void }) {
+export function LevelSelect({
+  onPick,
+  onTutorial,
+}: {
+  onPick: (level: number) => void;
+  onTutorial: () => void;
+}) {
   return (
     <div className="screen menu">
       <header className="masthead">
@@ -58,7 +64,11 @@ export function LevelSelect({ onPick }: { onPick: (level: number) => void }) {
       </div>
       <footer className="foot">
         60-second rounds · one unit per fill · declines are invisible until the replay ·{" "}
-        <a href="https://github.com/" onClick={(e) => e.preventDefault()} title="see README">
+        <button className="link-btn" onClick={onTutorial}>
+          ? replay the 30s tutorial
+        </button>{" "}
+        ·{" "}
+        <a href="https://github.com/YASHBHOSALE8/picked-off" target="_blank" rel="noreferrer">
           how it works
         </a>
       </footer>

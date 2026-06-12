@@ -1,60 +1,55 @@
 # Picked Off
 
-**A market-making game about adverse selection.** You are the only dealer in the market. You post a bid and an ask; anonymous orders arrive and trade at your prices — or walk away without a word. Most of the flow is noise. Some of it knows *exactly* what the asset is worth, and it only ever trades when your quote is wrong. You can't tell who is who: every fill might be income, or it might be the moment you got picked off. Your score is decomposed exactly into the three forces that rule a dealer's life — **spread captured**, **adverse selection**, **inventory cost** — and the post-round replay reveals the hidden fair value, every trader who exploited you, and every one who looked at your spread and declined. Silence, it turns out, was information all along.
+**Crypto-style market making in 60 seconds: the flow is anonymous, unsegmented, and some of it knows exactly what the asset is worth.** No payment for order flow, no flow labeling, no way to buy protection — you quote a two-sided market against a hidden jumping value, and toxicity is something you infer from the tape (and from the silences) or pay for. Glosten–Milgrom under the hood; your PnL decomposes *exactly* into spread captured + adverse selection + inventory cost, and the post-round replay shows you every trader who picked you off — and every one who looked at your spread and walked.
 
-**Status: playable** — steps ①–④ of ⑤ complete (spec → Python sim → bots/gate → web game). Polish + writeup in progress.
+## ▶ [**PLAY — picked-off.vercel.app**](https://picked-off.vercel.app)
 
-> **[SCREENSHOT PLACEHOLDER — live round, grey terminal, two quote lines + fill flashes. Replace me.]**
->
-> **[REPLAY GIF PLACEHOLDER — `docs/replay.gif`: scrubbing the reveal, V path + red pick-off rings. Replace me.]**
+![Replay of an L4 round: white = the hidden value revealed, step lines = the dealer's quotes, red rings = pick-offs](docs/replay.gif)
+
+*(Stylized render of the replay screen from a real L4 round — regenerate with `python docs/render_replay_gif.py`, or replace with a screen recording.)*
 
 ## How to play
 
-1. Pick a level (1–5). The level sets **α** — the share of arriving traders who know the true value.
-2. Set your opening bid/ask by dragging the two lines, then start the 60-second clock.
-3. The fair value starts public at $100.00, then jumps invisibly. Fills flash on the tape (color = side). Declines are invisible — a quiet market means *either* nobody came *or* everyone who came refused to trade with you. Those are very different things.
-4. Drag your quotes anytime: tighter spread → more noise fills, more spread income; but a quote on the wrong side of the true value is free money for the informed.
-5. At the close, your inventory is marked at the final fair value and your PnL is split exactly into spread captured + adverse selection + inventory cost.
-6. **Watch the replay.** The white line is what the value really did. Red rings are the fills that picked you off. Red squares are informed traders who *declined* — your spread straddled the truth and they walked. Grey ×'s balked at your spread. Tap any fill for its full anatomy, markouts included.
-7. "Download my session" exports the entire round as JSON, client-side. No backend, no telemetry, ever.
+1. Pick a level (α = share of informed flow, 10%→50%); drag your bid/ask lines — or nudge with **W/S** (ask) and **P/L** (bid), Shift = ±5.
+2. Tight spreads attract fills; stale quotes attract *informed* fills. Quiet markets mean no customers — or customers who refused your price. You can't tell which.
+3. At the close your book is marked at the true value; watch the replay to see who knew what. First visit gets a 30-second tutorial (replayable via "?" on the level screen).
 
-## The model (one paragraph)
+## The honest numbers behind the levels
 
-Glosten–Milgrom (1985) with a pure-jump hidden value: V jumps at Poisson times with discrete-Laplace sizes and is flat in between. Orders arrive Poisson; each is informed with probability α (trades only strictly through the true value, else declines) or noise (random side, accepts with probability `exp(−half-spread/δ₀)`). One unit per fill, single dealer, no book depth. Everything is integer ticks and microseconds, so the accounting identity *spread + adverse selection + inventory = total PnL* holds **exactly** — it's a test, not a rounding hope. The Python simulator is the source of truth; this web engine reproduces 12 frozen golden test vectors with exact integer equality. The full spec is [DESIGN.md](DESIGN.md); implementation reports are [REPORT2.md](REPORT2.md) and [REPORT3.md](REPORT3.md).
+Levels were calibrated by a **playability gate**: a Bayesian dealer (reads fills *and* silences) must beat a naive fixed-spread dealer by >30% mean PnL over 30 paired seeded rounds. 8 of 72 regimes passed ([grid](notebooks/gate_results.csv)); the shipped one (mean ticks/round):
 
-## Why these levels (the honest numbers)
+| Level | α | naive bot | Bayesian bot | edge |
+| --- | --- | --- | --- | --- |
+| 1 | 0.10 | 144.8 | 114.5 | 0.79× — naive play genuinely wins |
+| 2 | 0.20 | 85.9 | 86.8 | 1.01× — parity |
+| 3 | 0.30 | 69.4 | 93.7 | 1.35× |
+| 4 | 0.40 | 35.1 | 61.1 | 1.74× |
+| 5 | 0.50 | 18.2 | 55.6 | 3.05× |
 
-The game is tuned so that *information has value*: levels were chosen by a "playability gate" — a Bayesian dealer (reads the tape **and the silences**) must beat a naive fixed-spread dealer by >30% mean PnL over 30 paired seeded rounds. Results at the final regime (mean ticks/round; full grid in [notebooks/gate_results.csv](notebooks/gate_results.csv)):
+That 0.79× is the design: when flow is harmless, zero-edge "optimal" quoting loses to a wide dumb spread. By level 5, spread income alone cannot survive the toxicity. The arc *is* the game.
 
-| Level | α | naive bot | Bayesian bot | edge | gate |
-| --- | --- | --- | --- | --- | --- |
-| 1 | 0.10 | 144.8 | 114.5 | 0.79× | — naive play genuinely wins |
-| 2 | 0.20 | 85.9 | 86.8 | 1.01× | — parity |
-| 3 | 0.30 | 69.4 | 93.7 | 1.35× | PASS |
-| 4 | 0.40 | 35.1 | 61.1 | 1.74× | PASS |
-| 5 | 0.50 | 18.2 | 55.6 | 3.05× | PASS |
+## Read more
 
-That 0.79× at level 1 is not a bug: when almost nobody is informed, zero-edge "regret-free" quoting leaves money on the table — wide spreads print. By level 5, spread income alone cannot survive the toxicity. That arc *is* the game.
+- **[writeup/writeup.md](writeup/writeup.md)** — the 3-minute version: why crypto MM is a GM problem, calibration results, mechanism, and an n=3 human-vs-bot self-experiment (the human beat the bot twice — and got annihilated once, −872 vs +60, by never repricing after jumps).
+- **[DESIGN.md](DESIGN.md)** — the full spec (source of truth): model, exact accounting identity, censoring rationale, golden-vector schema.
+- **[notebooks/human_vs_bot.ipynb](notebooks/human_vs_bot.ipynb)** — drop your own session exports into `sessions/` and compare yourself to the Bayesian dealer on the identical stream.
 
 ## Repository
 
 | Path | What |
 | --- | --- |
-| [DESIGN.md](DESIGN.md) | The spec; source of truth (v1.1, changelog §10) |
-| [sim/](sim/) | Python simulator — canonical engine, Bayesian bots, gate (236 tests) |
-| [web/](web/) | React + TS + Vite game; TS engine port verified against the same vectors |
-| [vectors/](vectors/) | 12 frozen golden test vectors consumed by both engines |
-| [notebooks/](notebooks/) | Playability-gate grid search results |
-| [writeup/](writeup/) | Research writeup (step ⑤) |
+| [sim/](sim/) | Python simulator — canonical engine, Bayesian bots, playability gate (236 tests) |
+| [web/](web/) | React + TS + Vite game; TS engine verified against the same frozen vectors (25 tests) |
+| [vectors/](vectors/) | 12 frozen golden test vectors consumed by both engines, exact integer equality |
+| [sessions/](sessions/) | Session exports analyzed by the notebook (add yours) |
+| [writeup/](writeup/) · [notebooks/](notebooks/) | Research writeup · gate grid + human-vs-bot analysis |
 
 ## Develop
 
 ```bash
 cd sim && python -m pytest         # Python engine: 236 tests
-cd web && npm install
-npm test                           # TS engine: 25 conformance tests vs ../vectors
+cd web && npm install && npm test  # TS engine: conformance vs ../vectors
 npm run dev                        # play locally
-npm run build                      # static build (deploys to Vercel as-is)
 ```
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). Topics: `market-making` · `glosten-milgrom` · `adverse-selection` · `market-microstructure` · `trading-game`
