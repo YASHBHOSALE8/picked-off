@@ -73,6 +73,24 @@ def test_certify_rejects_hygiene_violations():
         events = [QuoteEvent(0, 9997, 10003), ArrivalEvent(bad_t, "informed", None, None)]
         with pytest.raises(CertificationError, match="hygiene"):
             certify(params, events)
+    # Clause (c): consecutive-microsecond exogenous events, both orders.
+    q = QuoteEvent(0, 9997, 10003)
+    for pair in (
+        [ArrivalEvent(500_003, "informed", None, None), JumpEvent(500_004, 5)],
+        [JumpEvent(500_003, 5), ArrivalEvent(500_004, "informed", None, None)],
+    ):
+        with pytest.raises(CertificationError, match="hygiene"):
+            certify(params, [q, *pair])
+
+
+def test_certify_enforces_per_event_field_constraints():
+    """certify round-trips through the §6.2 parser, so a hand-built stream
+    with an out-of-range u_accept (which the engine would silently treat as
+    a decline) cannot be certified into a vector."""
+    params = SimParams()
+    events = [QuoteEvent(0, 9997, 10003), ArrivalEvent(500_003, "noise", "buy", 1.5)]
+    with pytest.raises(Exception, match="u_accept"):
+        certify(params, events)
 
 
 def test_q5_param_guard_rejects_plausible_negative_v():

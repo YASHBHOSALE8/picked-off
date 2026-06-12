@@ -1,6 +1,6 @@
 # Picked Off — Design Document
 
-**Version 1.0 — 2026-06-11.**
+**Version 1.1 — 2026-06-12** (changelog in §10).
 **This document is the source of truth.** If code and DESIGN.md disagree, DESIGN.md wins until it is explicitly amended. It is written so that a stranger could implement the simulator from this file alone.
 
 Picked Off is a browser-based market-making game and research project built on the Glosten–Milgrom adverse-selection model. The player is the sole dealer in a single-instrument market, posting a bid and an ask against a hidden fair value. Order flow is a mixture of noise traders and informed traders who know the fair value exactly. The score decomposes PnL into three exact components — spread captured, adverse selection, and inventory cost — so the player can see *how* they made or lost money, not just how much. A Python simulator is the canonical engine; a React/TypeScript web game mirrors it bit-for-bit via shared golden test vectors; research bots and a writeup analyze optimal play.
@@ -75,7 +75,7 @@ The two trade conditions are mutually exclusive because `a ≥ b + 1`. Ties decl
 - Side intent is a pre-drawn fair coin: buy or sell with probability 1/2 each.
 - Accepts the quote on its side with probability `f(h)` where `h = (a − b)/2` is the **half-spread in ticks** (possibly half-integer):
 
-  `f(h) = exp(−h / delta0)`,  `delta0 > 0` in ticks (default 4.0).
+  `f(h) = exp(−h / delta0)`,  `delta0 > 0` in ticks (final value 8.0, §1.5).
 
   Acceptance is decided by a pre-drawn uniform `u_accept ∈ [0, 1)`: the noise trader **accepts iff `u_accept < f(h)`**. A buyer fills at the ask; a seller fills at the bid. Otherwise it declines ("balked at the spread").
 - Design choice (locked for v1): the distance in `f` is measured from the **dealer's own quote mid**, so both sides sit at distance h and noise acceptance depends only on the posted spread, not on where the quotes sit relative to V or the tape. This keeps noise flow exogenous to V (clean Glosten–Milgrom likelihoods for Bot 1, §4.3) and makes informed flow the *only* punishment for a mispriced mid — which is the lesson the game teaches. The alternative (noise elasticity relative to a tape-derived reference mid) is recorded in §9 as a rejected variant.
@@ -106,19 +106,22 @@ Rationale, in three registers:
 ### 1.5 Rounds, levels, and default parameters
 
 - A round lasts **60 seconds** of game time. At round end, terminal inventory is marked at `V_T` (§2.1).
-- Levels escalate `alpha` (the informed share); all other parameters stay fixed. The level table is **provisional until the playability gate (§5) selects the final regime**.
+- Levels escalate `alpha` (the informed share); all other parameters stay fixed. **The level table is FINAL (v1.1)**, selected by the §5 playability gate (grid results: `notebooks/gate_results.csv`).
 
-| Parameter | Symbol | Default | Unit | Notes |
+| Parameter | Symbol | Value (final) | Unit | Notes |
 | --- | --- | --- | --- | --- |
 | Initial fair value | `V0` | 10_000 | ticks | $100.00; public at t = 0 |
 | Round length | `T` | 60_000_000 | µs | 60 s |
-| Jump intensity | `lambda_j` | 0.5 | jumps/s | ~30 jumps per round |
+| Jump intensity | `lambda_j` | 0.2 | jumps/s | ~12 jumps per round |
 | Jump magnitude param | `p_J` | 0.2 | — | mean jump 5 ticks |
 | Arrival intensity | `lambda_a` | 4.0 | arrivals/s | ~240 arrivals per round |
-| Noise acceptance scale | `delta0` | 4.0 | ticks | `f(h) = exp(−h/delta0)` |
-| Informed share, level 1–5 | `alpha` | 0.10 / 0.20 / 0.30 / 0.40 / 0.50 | — | provisional; gate-tuned |
+| Noise acceptance scale | `delta0` | 8.0 | ticks | `f(h) = exp(−h/delta0)` |
+| Informed share, level 1–5 | `alpha` | 0.10 / 0.20 / 0.30 / 0.40 / 0.50 | — | final; gate passes at L3–L5 |
+| Bot 0 reference half-spread | `k0` | 2 | ticks | §5 gate baseline |
 
-All parameters live in one place in each engine (`sim/picked_off/params.py`; the web mirror) and inside each golden vector's `meta.params`.
+Difficulty ramp in this regime (30 paired seeded runs per level, mean PnL in ticks): the naive fixed-spread baseline earns 145 / 86 / 69 / 35 / 18 across levels 1–5 while the Bayesian dealer earns 115 / 87 / 94 / 61 / 56 — information is worthless at level 1 (ratio 0.79), at parity by level 2 (1.01), and decisive by level 5 (3.05). The gate (§5) formally passes at levels 3, 4, and 5.
+
+All parameters live in one place in each engine (`sim/picked_off/params.py`; the web mirror) and inside each golden vector's `meta.params`. Frozen golden vectors embed the v1.0 parameters they were generated under — vectors are self-contained, so the regime change does not touch them.
 
 ---
 
@@ -136,7 +139,7 @@ Cash starts at 0 and inventory starts at 0. A customer buy (q = −1) adds `+a_i
 
 **Total PnL** marks terminal inventory at the final fair value:
 
-```
+```text
 PnL = cash_T + inv_T · V_T            (in ticks)
 ```
 
@@ -144,7 +147,7 @@ PnL = cash_T + inv_T · V_T            (in ticks)
 
 Three per-fill terms, each summed over all fills (computed in half-ticks so they are integers):
 
-```
+```text
 Spread captured     SC = Σ_i  q_i · (m_i − p_i)   = Σ_i (a_i − b_i)/2
 Adverse selection   AS = Σ_i  q_i · (V_i − m_i)
 Inventory cost      IC = Σ_i  q_i · (V_T − V_i)
@@ -152,7 +155,7 @@ Inventory cost      IC = Σ_i  q_i · (V_T − V_i)
 
 **Identity (must hold exactly, every run):**
 
-```
+```text
 SC + AS + IC = Σ_i q_i · (m_i − p_i + V_i − m_i + V_T − V_i)
              = Σ_i q_i · (V_T − p_i)
              = inv_T · V_T  −  Σ_i q_i · p_i
@@ -164,7 +167,7 @@ The telescoping makes the identity an algebraic fact, independent of the model. 
 
 Equivalent formula for the inventory term (also enforced as an exact test invariant):
 
-```
+```text
 IC = Σ_k  J_k · inv(t_k⁻)        summed over V jumps k after the first fill,
 ```
 
@@ -182,7 +185,7 @@ Per-fill attribution (`sc_i, as_i, ic_i`) is reported in the replay so the playe
 
 For each fill and horizon `tau ∈ {1 s, 5 s}`:
 
-```
+```text
 MO_i(tau) = q_i · ( V(min(t_i + tau, T)) − p_i )      (ticks, integer)
 ```
 
@@ -194,7 +197,7 @@ Markouts are the standard empirical pick-off measure: fill price versus fair val
 
 Both engines implement exactly this loop. Input: `params`, ordered `event_stream` (§6.2). Output: fills, declines (replay channel), terminal state, decomposition, markouts.
 
-```
+```text
 state:  V ← V0;  quotes ← unset;  cash ← 0;  inv ← 0
 logs:   fills ← [];  declines ← [];  jumps ← []   (jumps kept for V(t) lookups)
 
@@ -248,7 +251,7 @@ Bots are research instruments and live in the Python sim only (v1 web app does n
 The naive baseline: no inference, just recentering on prints.
 
 - `mid_est` = price of the **last fill**; `V0` before any fill.
-- Quotes `bid = mid_est − k0`, `ask = mid_est + k0` with fixed half-spread `k0` (integer ticks, default 3; gate-tunable).
+- Quotes `bid = mid_est − k0`, `ask = mid_est + k0` with fixed half-spread `k0` (integer ticks, reference value 2 — the §5 gate baseline; gate-tunable).
 - Updates quotes after every fill and on every tick (idempotent between fills).
 
 Bot 0 chases prints: a single noise fill at the ask drags its whole market up by construction, and it never widens when flow goes one-sided. It is *designed* to be picked off in informed regimes.
@@ -257,11 +260,11 @@ Bot 0 chases prints: a single noise fill at the ask drags its whole market up by
 
 Maintains a grid posterior over V and quotes regret-free GM prices.
 
-**Posterior.** `pi(v)` over the integer tick grid `v ∈ [V0 − W, V0 + W]`, `W = 200` ticks (covers > 5σ of total round V drift at defaults: per-jump RMS = √(E[J²]) ≈ 6.7 ticks, √30 jumps → ≈ 37 ticks round RMS). Initialized to a point mass at V0 (V0 is public, §1.1). After every update, renormalize; probability mass that convolves past the grid edge is truncated and renormalized (documented approximation, fine at W = 200).
+**Posterior.** `pi(v)` over the integer tick grid `v ∈ [V0 − W, V0 + W]`, `W = 200` ticks (covers > 8σ of total round V drift at the final §1.5 regime: per-jump RMS = √(E[J²]) ≈ 6.7 ticks, √12 jumps → ≈ 23 ticks round RMS; still > 5σ at the widest gate-grid corner, `lambda_j = 0.5`). Initialized to a point mass at V0 (V0 is public, §1.1). After every update, renormalize; probability mass that convolves past the grid edge is truncated and renormalized (documented approximation, fine at W = 200).
 
 **Time update** (jump-process transition over an interval Δ with no observation): with `mu = lambda_j · Δ`,
 
-```
+```text
 pi ← Σ_{k=0..K} Poisson(k; mu) · (D^{*k} * pi)
 ```
 
@@ -271,7 +274,7 @@ where `D` is the discrete-Laplace jump kernel of §1.1 and `D^{*k}` its k-fold s
 
 - *Censored quiet interval* — at each tick, covering the elapsed interval Δ since the last update with **no visible fill**:
 
-  ```
+  ```text
   L_quiet(v) = exp( − lambda_a · Δ · p_trade(v) )
   p_trade(v) = alpha · 1[v < b or v > a]  +  (1 − alpha) · f(h)
   ```
@@ -279,7 +282,7 @@ where `D` is the discrete-Laplace jump kernel of §1.1 and `D^{*k}` its k-fold s
   This is the censoring term of §1.4: quiet is evidence that V is *inside* the quotes (where informed traders decline), with strength growing in `alpha` and Δ. Discretization note: this treats quotes and V's effect on thinning as constant across the 100 ms slice, applying the time update and the quiet factor sequentially per slice — the spec'd approximation, exact as Δ → 0; the writeup must state it.
 - *Own fill* (the public tape and the bot's own fills are the same stream in a single-dealer market — the likelihood below is the "tape + own fills" update):
 
-  ```
+  ```text
   buy at ask:   L(v) = alpha · 1[v > a] + (1 − alpha) · ½ · f(h)
   sell at bid:  L(v) = alpha · 1[v < b] + (1 − alpha) · ½ · f(h)
   ```
@@ -288,7 +291,7 @@ where `D` is the discrete-Laplace jump kernel of §1.1 and `D^{*k}` its k-fold s
 
 **Quoting — GM regret-free prices.** Quotes satisfy the no-regret fixed point: the ask equals the posterior expectation of V *conditional on the next arrival lifting that ask*, and symmetrically for the bid:
 
-```
+```text
 E[V | buy at (b,a)]  =  ( alpha · Σ_{v>a} v·pi(v)  +  (1−alpha)·½·f(h) · Σ_v v·pi(v) )
                         / ( alpha · P_pi(v>a)      +  (1−alpha)·½·f(h) )
 E[V | sell at (b,a)] =  symmetric with {v<b}
@@ -296,9 +299,9 @@ E[V | sell at (b,a)] =  symmetric with {v<b}
 
 Deterministic fixed-point algorithm (integer quotes; ceil/floor keep the dealer on the profitable side of the conditional expectation):
 
-```
+```text
 a ← ceil(E_pi[V]) + 1;  b ← floor(E_pi[V]) − 1
-repeat up to 50 times:
+repeat up to 500 times:
     a' ← max( ceil( E[V | buy  at (b,a)] ),  b + 1 )
     b' ← min( floor( E[V | sell at (b,a)] ), a' − 1 )
     if (a', b') == (a, b): stop                     # fixed point
@@ -307,11 +310,11 @@ repeat up to 50 times:
     (a, b) ← (a', b')
 ```
 
-Convergence is typically < 10 iterations with unimodal posteriors; the cycle rule makes the algorithm total and deterministic either way.
+Convergence is typically < 10 iterations with unimodal posteriors. With dispersed posteriors the iteration can enter a widen-to-grid-edge / snap-back limit cycle whose period scales with the grid width (~50–60 at W = 200) — the 500-iteration budget exceeds it by ~5×, so the cycle rule fires rather than the budget (v1.1 change: the budget was 50, which silently fell through to the last iterate on up to ~30% of calls in dispersed regimes). If the budget is ever exhausted with neither a fixed point nor a revisit, the last iterate is used; either way the algorithm is total and deterministic.
 
 ### 4.4 Bot 2 — Bot 1 + inventory skew (STRETCH, CUTTABLE)
 
-Bot 1's quotes, both shifted by `−round(gamma · inv)` ticks (`gamma` default 0.5 ticks per unit), then re-clamped to `a ≥ b + 1`. Long inventory shades both quotes down to attract buyers and repel sellers. This trades expected PnL for inventory variance — the empirical comparison Bot 1 vs Bot 2 (same streams) is writeup material. **Cut without ceremony if the timebox bites.**
+Bot 1's quotes, both shifted by `−round(gamma · inv)` ticks (`gamma` default 0.5 ticks per unit), then re-clamped to `a ≥ b + 1`. `round` is **round-half-away-from-zero** (pinned in v1.1: at `gamma = 0.5` every odd inventory is a .5 tie, and banker's rounding would zero the skew at |inv| = 1 — the most common nonzero inventory). The skewed quotes are what stands in the market, so Bot 1's posterior likelihoods condition on them. Long inventory shades both quotes down to attract buyers and repel sellers. This trades expected PnL for inventory variance — the empirical comparison Bot 1 vs Bot 2 (same streams) is writeup material. **Cut without ceremony if the timebox bites.**
 
 ---
 
@@ -321,7 +324,7 @@ Bot 1's quotes, both shifted by `−round(gamma · inv)` ticks (`gamma` default 
 
 Precisely: a parameter set `(lambda_j, p_J, lambda_a, alpha, delta0, k0)` passes the gate iff, over N ≥ 30 paired rounds with common random numbers (same exogenous streams fed to both bots, §4.1):
 
-```
+```text
 mean PnL(Bot 0) > 0      and      mean PnL(Bot 1) ≥ 1.3 × mean PnL(Bot 0)
 ```
 
@@ -413,7 +416,7 @@ Example (abridged but schema-complete):
 
 (Walkthrough of the example: noise buy fills at ask 10003 with V = 10000, so q = −1, m = 10000, sc = 3 ticks = 6 half-ticks, as = q·(V−m) = 0, the −7 jump after the fill gives ic = q·(V_T − V_i) = (−1)·(−7) = +7 ticks = 14 half-ticks; PnL = cash + inv·V_T = 10003 − 9993 = 10 ticks = 20 half-ticks = 6 + 0 + 14. ✓ Markouts: V(1.4 s) = 10000 → mo_1s = (−1)·(10000 − 10003) = 3; V(5.4 s) = 9993 → mo_5s = (−1)·(9993 − 10003) = 10.)
 
-This schema is duplicated verbatim in `vectors/SCHEMA.md` (kept in sync manually; DESIGN.md wins on conflict).
+This schema is mirrored (in abridged form) in `vectors/SCHEMA.md` (kept in sync manually; DESIGN.md wins on conflict).
 
 ### 6.3 Cross-language determinism rules
 
@@ -433,7 +436,7 @@ At minimum: empty round (no arrivals — identity holds at all-zeros); noise-onl
 
 ### 7.1 Repository layout (monorepo)
 
-```
+```text
 picked-off/
 ├── DESIGN.md                  ← this file; source of truth
 ├── README.md                  ← pitch, status, replay GIF placeholder
@@ -532,4 +535,17 @@ Open questions (deferred, non-blocking; revisit at the step where they bite):
 - **Q2 (step ③):** Bot 0's last-trade mid is maximally naive. If the gate passes trivially at all α, consider an EWMA-mid Bot 0 variant as the "fair" baseline and report both.
 - **Q3 (step ④):** Whether the live tape should show fill side (color) or price only — side display materially changes the human inference game. Decide in playtesting.
 - **Q4 (step ⑤):** Whether replay should show Bot 1's posterior ribbon as a "ghost" overlay (teaching tool vs scope creep).
-- **Q5 (step ②):** Whether V < 0 needs clamping at extreme parameter corners during gate grid search (engine currently does not clamp; generator can simply reject such corners).
+- **Q5 (step ②):** Whether V < 0 needs clamping at extreme parameter corners during gate grid search (engine currently does not clamp; generator can simply reject such corners). *Resolved in step ② as specified: the generator rejects parameter sets with `v0 ≤ 6σ` of round drift and re-rolls any realized path touching ≤ 0; the gate grid skips rejected corners.*
+
+---
+
+## 10. Changelog
+
+**v1.1 — 2026-06-12 (build steps ② + ③).** Amendments made while implementing the sim and running the gate; each was a deviation discovered between v1.0's text and reality:
+
+- **§1.5 level table FINAL.** Gate-selected regime `lambda_j = 0.2`, `delta0 = 8.0`, `k0 = 2` (was provisional `0.5 / 4.0 / 3`); alpha ladder unchanged at 0.10–0.50. Gate passes at levels 3–5 (results: `notebooks/gate_results.csv`). §1.3/§4.2 parameter mentions updated to match.
+- **§4.3 fixed-point budget 50 → 500.** With dispersed posteriors the iteration enters a widen/snap-back limit cycle of period ~50–60 at W = 200, so the old budget fell through to an undocumented last-iterate fallback on up to ~30% of calls in high-alpha, tight-noise regimes (~2× PnL impact there). The budget now exceeds the cycle period; the last-iterate fallback is documented. Cycle detection is specified to cover the budget's final iterate.
+- **§4.4 skew rounding pinned.** `round` = round-half-away-from-zero (banker's rounding zeroes the skew at |inv| = 1 when `gamma = 0.5`); Bot 2's posterior conditions on the *skewed* standing quotes.
+- **§4.3 grid-width note** updated for the final regime (W = 200 is > 8σ).
+- **§6.2 wording:** `vectors/SCHEMA.md` is a mirrored abridgment, not a verbatim duplicate; SCHEMA.md's determinism rule 3 corrected (meta.params rates/probabilities are JSON floats; the integer rule covers timestamps, prices, sizes, and outputs).
+- **Q5 resolved** (see above).

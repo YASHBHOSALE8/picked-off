@@ -47,13 +47,13 @@ def validate_vector(doc: dict) -> SimParams:
     meta = doc["meta"]
     if not isinstance(meta, dict) or set(meta) != _META_KEYS:
         raise VectorError(f"meta keys must be exactly {sorted(_META_KEYS)}")
+    _ints(meta, {"schema_version", "seed"}, "meta")
     if meta["schema_version"] != 1:
         raise VectorError(f"unsupported schema_version {meta['schema_version']!r}")
     if not isinstance(meta["name"], str) or not meta["name"]:
         raise VectorError("meta.name must be a nonempty string")
     if not isinstance(meta["description"], str):
         raise VectorError("meta.description must be a string")
-    _ints(meta, {"seed"}, "meta")
     try:
         params = SimParams.from_meta(meta["params"])
     except ValueError as e:
@@ -68,6 +68,8 @@ def validate_vector(doc: dict) -> SimParams:
     if not isinstance(out, dict) or set(out) != _OUTPUT_KEYS:
         raise VectorError(f"expected_output keys must be exactly {sorted(_OUTPUT_KEYS)}")
     _ints(out, {"v_terminal", "inventory_terminal", "cash_terminal"}, "expected_output")
+    if not isinstance(out["fills"], list) or not isinstance(out["declines"], list):
+        raise VectorError("expected_output.fills and .declines must be arrays")
 
     for i, f in enumerate(out["fills"]):
         if set(f) != _FILL_KEYS:

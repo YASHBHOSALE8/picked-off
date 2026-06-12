@@ -27,6 +27,14 @@ def noise_accept_prob(bid: int, ask: int, delta0: float) -> float:
     return math.exp(-(ask - bid) / (2.0 * delta0))
 
 
+def _int_or_die(value, what: str, t_us) -> int:
+    # bool is an int subclass; floats would silently break the exact-integer
+    # identity (§0 rule 1) — fail loudly per §6.3-4.
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise EngineError(f"{what} must be an integer at t_us={t_us}, got {value!r}")
+    return value
+
+
 @dataclass(frozen=True)
 class Fill:
     t_us: int
@@ -86,6 +94,7 @@ class Engine:
     def apply(self, ev: Event) -> Fill | Decline | None:
         if self._finalized:
             raise EngineError("engine already finalized")
+        _int_or_die(ev.t_us, "t_us", ev.t_us)
         if ev.t_us <= self._last_t:
             raise EngineError(
                 f"timestamps must be strictly increasing: {ev.t_us} after {self._last_t} (§0 rule 2)"
@@ -95,14 +104,16 @@ class Engine:
         self._last_t = ev.t_us
 
         if isinstance(ev, QuoteEvent):
-            if ev.ask < ev.bid + 1:
+            bid = _int_or_die(ev.bid, "bid", ev.t_us)
+            ask = _int_or_die(ev.ask, "ask", ev.t_us)
+            if ask < bid + 1:
                 raise EngineError(f"quote at {ev.t_us}: ask must be >= bid + 1")
-            self.quotes = (ev.bid, ev.ask)
+            self.quotes = (bid, ask)
             self._quote_log.append(ev)
             return None
 
         if isinstance(ev, JumpEvent):
-            if ev.size == 0:
+            if _int_or_die(ev.size, "size", ev.t_us) == 0:
                 raise EngineError(f"jump at {ev.t_us}: size must be nonzero")
             self.v += ev.size
             self._jumps.append(ev)
@@ -113,17 +124,28 @@ class Engine:
                 raise EngineError(f"arrival at {ev.t_us} with no quote set (§1.2)")
             bid, ask = self.quotes
             if ev.trader == "informed":
+                if ev.side_intent is not None or ev.u_accept is not None:
+                    raise EngineError(
+                        f"arrival at {ev.t_us}: informed arrivals carry null side_intent/u_accept (D5)"
+                    )
                 # Strict inequalities; ties decline (§1.3).
                 if ask < self.v:
                     return self._fill(ev.t_us, "buy", ask, "informed", bid, ask)
                 if bid > self.v:
                     return self._fill(ev.t_us, "sell", bid, "informed", bid, ask)
                 return self._decline(ev.t_us, "informed", None, "v_inside_quotes")
-            # noise: accepts iff u_accept < f(h) (§1.3)
-            if ev.u_accept < noise_accept_prob(bid, ask, self.params.delta0):
-                price = ask if ev.side_intent == "buy" else bid
-                return self._fill(ev.t_us, ev.side_intent, price, "noise", bid, ask)
-            return self._decline(ev.t_us, "noise", ev.side_intent, "balked_at_spread")
+            if ev.trader == "noise":
+                if ev.side_intent not in ("buy", "sell"):
+                    raise EngineError(f"arrival at {ev.t_us}: bad noise side_intent {ev.side_intent!r}")
+                u = ev.u_accept
+                if isinstance(u, bool) or not isinstance(u, (int, float)) or not (0.0 <= u < 1.0):
+                    raise EngineError(f"arrival at {ev.t_us}: u_accept must be in [0, 1), got {u!r}")
+                # noise: accepts iff u_accept < f(h) (§1.3)
+                if u < noise_accept_prob(bid, ask, self.params.delta0):
+                    price = ask if ev.side_intent == "buy" else bid
+                    return self._fill(ev.t_us, ev.side_intent, price, "noise", bid, ask)
+                return self._decline(ev.t_us, "noise", ev.side_intent, "balked_at_spread")
+            raise EngineError(f"arrival at {ev.t_us}: trader must be informed/noise, got {ev.trader!r}")
 
         raise EngineError(f"unknown event {ev!r}")
 

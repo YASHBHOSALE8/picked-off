@@ -148,8 +148,16 @@ def generate_stream(
 
 def certify(params: SimParams, events: list) -> None:
     """All checks a frozen vector stream must pass (§6.3). Raises on failure."""
+    from .events import event_to_json, parse_stream
+
     check_params_v_positive(params)
-    validate_stream(events, params.round_us, require_opening_quote=True)
+    # Round-trip through the JSON parser so every §6.2 per-event field
+    # constraint (quote validity, nonzero jumps, u_accept in [0,1),
+    # side_intent iff noise) is enforced as part of certification, even for
+    # hand-constructed Event objects.
+    events = parse_stream(
+        [event_to_json(ev) for ev in events], params.round_us, require_opening_quote=True
+    )
 
     occupied: set[int] = set()
     quote_times = {ev.t_us for ev in events if isinstance(ev, QuoteEvent)}
@@ -265,6 +273,16 @@ def vector_from_events(name: str, description: str, params: SimParams, seed: int
     }
 
 
+# The parameter set the frozen vectors were generated under (the v1.0 §1.5
+# defaults). Pinned explicitly so re-running build_inventory reproduces the
+# frozen artifacts even after SimParams defaults move to the final gate
+# regime. Vectors embed their own params, so this never affects conformance.
+_VECTOR_PARAMS = SimParams(
+    v0=10_000, round_us=60_000_000, lambda_j=0.5, p_jump=0.2,
+    lambda_a=4.0, alpha=0.3, delta0=4.0,
+)
+
+
 def _hand_verified_vector() -> dict:
     """The hand-verified §6.4 vector. Full arithmetic in tests/test_vectors.py.
 
@@ -277,7 +295,7 @@ def _hand_verified_vector() -> dict:
     """
     from .events import ArrivalEvent, JumpEvent, QuoteEvent
 
-    params = SimParams()
+    params = _VECTOR_PARAMS
     events = [
         QuoteEvent(0, 9995, 10005),
         ArrivalEvent(250_003, "informed", None, None),
@@ -312,7 +330,7 @@ def build_inventory(out_dir) -> list[str]:
     from .vectors import save_vector
 
     out = Path(out_dir)
-    P = SimParams()
+    P = _VECTOR_PARAMS
     v0 = P.v0
     static3 = [(0, v0 - 3, v0 + 3)]
     static5 = [(0, v0 - 5, v0 + 5)]
@@ -343,16 +361,16 @@ def build_inventory(out_dir) -> list[str]:
             P, 0, [QuoteEvent(0, v0 - 3, v0 + 3)],
         ),
         make_vector("noise_only", "alpha=0: pure noise flow, tight quotes.",
-                    SimParams(alpha=0.0), 1001, static3,
+                    SimParams(alpha=0.0, lambda_j=P.lambda_j, delta0=P.delta0), 1001, static3,
                     condition=lambda r: len(r.fills) >= 5),
         make_vector("informed_only", "alpha=1: pure informed flow; fills and declines.",
-                    SimParams(alpha=1.0), 1002, static3,
+                    SimParams(alpha=1.0, lambda_j=P.lambda_j, delta0=P.delta0), 1002, static3,
                     condition=lambda r: len(r.fills) >= 1 and len(r.declines) >= 1),
         make_vector("jump_heavy", "lambda_j=3.0: many jumps between fills.",
-                    SimParams(lambda_j=3.0), 1003, static5,
+                    SimParams(lambda_j=3.0, alpha=P.alpha, delta0=P.delta0), 1003, static5,
                     condition=lambda r: len(r.jumps) >= 5),
         make_vector("declines_only", "Very wide quotes: every arrival declines.",
-                    SimParams(lambda_j=0.2), 1004, wide,
+                    SimParams(lambda_j=0.2, alpha=P.alpha, delta0=P.delta0), 1004, wide,
                     condition=lambda r: not r.fills and len(r.declines) >= 10),
         make_vector("quote_changes_mid_round", "Scripted quote schedule stepping through the round.",
                     P, 1005, stepping,

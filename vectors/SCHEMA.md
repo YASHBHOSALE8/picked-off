@@ -58,8 +58,12 @@ noise trades its `side_intent` iff `u_accept < exp(-h/delta0)` with
    vector with margin `|u_accept − f(h)| > 1e−9` at every noise arrival
    against the scripted quotes, so a 1-ulp `exp()` difference can never
    flip an outcome.
-3. `u_accept` is written with ≤ 17 significant digits (exact double
-   round-trip). All other numbers are JSON integers.
+3. JSON number types (DESIGN.md §6.3-3): timestamps, prices, V values,
+   jump sizes, inventory, cash, and the decomposition are JSON integers;
+   `u_accept` is a decimal float with ≤ 17 significant digits (exact double
+   round-trip); the `meta.params` rate/probability fields (`lambda_j`,
+   `p_jump`, `lambda_a`, `alpha`, `delta0`) are JSON numbers and may be
+   floats.
 4. Engines must validate streams and fail loudly on malformed vectors.
 5. Timestamp hygiene (DESIGN.md §4.1/§6.3 rule 5): certified vectors
    additionally guarantee that no jump or arrival timestamp is ≤ 1 µs,

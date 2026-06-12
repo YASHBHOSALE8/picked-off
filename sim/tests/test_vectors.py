@@ -57,6 +57,18 @@ def test_vector_conformance_exact(path):
     check_conformance(load_vector(path))
 
 
+@pytest.mark.parametrize("path", VECTOR_PATHS, ids=lambda p: p.stem)
+def test_vector_certified(path):
+    """Frozen vectors must satisfy full certification (§6.3): timestamp
+    hygiene AND the 1e-9 u_accept margin that protects the TS engine."""
+    from picked_off.events import parse_stream
+    from picked_off.generator import certify
+
+    doc = load_vector(path)
+    params = validate_vector(doc)
+    certify(params, parse_stream(doc["event_stream"], params.round_us))
+
+
 def test_hand_verified_numbers():
     """The docstring arithmetic, asserted field by field."""
     doc = load_vector(VECTOR_DIR / "hand_verified_mixed.json")
