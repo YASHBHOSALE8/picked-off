@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useCallback, useState } from "react";
+import { LiveRound, type FinishedRound } from "./game/live";
+import { pickStream } from "./game/pool";
+import { LevelSelect } from "./ui/LevelSelect";
+import { LiveScreen } from "./ui/LiveScreen";
+import { ReplayScreen } from "./ui/ReplayScreen";
+import { ScoreScreen } from "./ui/ScoreScreen";
 
-function App() {
-  const [count, setCount] = useState(0)
+type Screen = "menu" | "loading" | "live" | "score" | "replay" | "error";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export default function App() {
+  const [screen, setScreen] = useState<Screen>("menu");
+  const [live, setLive] = useState<LiveRound | null>(null);
+  const [done, setDone] = useState<FinishedRound | null>(null);
+  const [error, setError] = useState("");
+
+  const play = useCallback(async (level: number) => {
+    setScreen("loading");
+    try {
+      const doc = await pickStream(level);
+      setLive(new LiveRound(doc));
+      setDone(null);
+      setScreen("live");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+      setScreen("error");
+    }
+  }, []);
+
+  const onDone = useCallback((f: FinishedRound) => {
+    setDone(f);
+    setScreen("score");
+  }, []);
+
+  switch (screen) {
+    case "menu":
+      return <LevelSelect onPick={play} />;
+    case "loading":
+      return (
+        <div className="screen center">
+          <p className="dim">fetching a round…</p>
+        </div>
+      );
+    case "live":
+      return live ? <LiveScreen round={live} onDone={onDone} /> : null;
+    case "score":
+      return done ? (
+        <ScoreScreen
+          round={done}
+          onReplay={() => setScreen("replay")}
+          onAgain={() => play(done.level)}
+          onMenu={() => setScreen("menu")}
+        />
+      ) : null;
+    case "replay":
+      return done ? (
+        <ReplayScreen round={done} onBack={() => setScreen("score")} onMenu={() => setScreen("menu")} />
+      ) : null;
+    case "error":
+      return (
+        <div className="screen center">
+          <p className="neg">{error}</p>
+          <button className="btn" onClick={() => setScreen("menu")}>
+            Back
+          </button>
+        </div>
+      );
+  }
 }
-
-export default App
