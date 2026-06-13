@@ -322,6 +322,16 @@ b {
 
 /* --- touch quote pads (coarse-pointer only) ------------------------------ */
 
+/* Tuning knobs — one place to fine-tune button size and placement. */
+:root {
+  --pad-btn-w: 132px; /* hit-area width  (was 60 — primary touch control) */
+  --pad-btn-h: 100px; /* hit-area height (was 46 — >2x bigger) */
+  --pad-glyph: 48px; /* arrow glyph size (was 24 — 2x) */
+  --pad-gap: 20px; /* vertical gap between ▲, label, ▼ (anti-mis-hit) */
+  --pad-side-inset: 30px; /* inward margin from the L/R screen edges */
+  --pad-bottom: 16px; /* lift from the bottom edge */
+}
+
 .quote-pads {
   position: absolute;
   left: 0;
@@ -330,8 +340,8 @@ b {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 2px 4px 6px;
-  pointer-events: none; /* gaps pass taps through to the canvas */
+  padding: 0 var(--pad-side-inset) var(--pad-bottom);
+  pointer-events: none; /* only the buttons capture; gaps + label drag the canvas */
   z-index: 2;
 }
 
@@ -339,15 +349,14 @@ b {
   display: flex;
   flex-direction: column;
   align-items: center;
-  pointer-events: auto;
+  gap: var(--pad-gap);
 }
 
 .pad-label {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--dim);
   line-height: 1;
-  margin: -2px 0;
 }
 
 .pad-btn {
@@ -357,15 +366,16 @@ b {
   background: none;
   border: 0;
   padding: 0;
-  width: 60px;
-  height: 46px;
+  width: var(--pad-btn-w);
+  height: var(--pad-btn-h);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--v); /* white arrow, no fill, no box */
-  font-size: 24px;
+  font-size: var(--pad-glyph);
   line-height: 1;
   cursor: pointer;
+  pointer-events: auto; /* the only active hit areas in the pad container */
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
