@@ -12,7 +12,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { FinishedRound, LiveRound } from "../game/live";
 import { clockMmSs, COLORS, halfTicksToUsd, priceToUsd } from "./format";
-import { hasFinePointer, KEY_HINTS, KEY_STEP, KEY_STEP_SHIFT, KEYMAP } from "./keys";
+import {
+  hasFinePointer,
+  KEY_HINTS,
+  KEY_HOLD_DELAY_MS,
+  KEY_HOLD_REPEAT_MS,
+  KEY_STEP,
+  KEY_STEP_SHIFT,
+  KEYMAP,
+} from "./keys";
 import { CARDS, NOPICKOFF_FALLBACK_T_US, TUTORIAL_ARM_TEXT, type TutorialCard } from "./tutorial";
 
 const VIEW_SPAN_TICKS = 90;
@@ -24,6 +32,42 @@ interface Hud {
   position: number;
   scHalf: number;
   fills: number;
+}
+
+type Dir = "askUp" | "askDown" | "bidUp" | "bidDown";
+
+/** Borderless white-arrow nudge button (touch). Tap = one nudge; hold = repeat
+ * (driven by the parent's startHold/endHold). Pointer-captured so a finger
+ * that slides off still releases the hold on lift. */
+function PadButton({
+  dir,
+  glyph,
+  label,
+  onStart,
+  onEnd,
+}: {
+  dir: Dir;
+  glyph: string;
+  label: string;
+  onStart: (d: Dir) => void;
+  onEnd: () => void;
+}) {
+  return (
+    <button
+      className="pad-btn"
+      aria-label={label}
+      onPointerDown={(e) => {
+        e.preventDefault();
+        e.currentTarget.setPointerCapture?.(e.pointerId);
+        onStart(dir);
+      }}
+      onPointerUp={onEnd}
+      onPointerCancel={onEnd}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      {glyph}
+    </button>
+  );
 }
 
 const HELP_LINES = [
@@ -69,6 +113,7 @@ export function LiveScreen({
   const phaseRef = useRef<"arm" | "run">("arm");
   phaseRef.current = phase;
   const keyHints = useRef(hasFinePointer()).current;
+  const touchControls = !keyHints; // coarse pointer: show on-screen pads instead
 
   const pausePush = useCallback(() => {
     if (pauseDepthRef.current === 0) pauseStartRef.current = performance.now();
@@ -138,25 +183,68 @@ export function LiveScreen({
     [round, gameT],
   );
 
-  // ---- keyboard control (keys.ts; hold = native key-repeat) ---------------
+  // ---- the one quote-mutation path: keyboard AND touch pads both call
+  //      nudge -> applyQuotes -> the same D11 injection as dragging ----------
 
+  const nudge = useCallback(
+    (which: Dir, step: number) => {
+      if (pauseDepthRef.current > 0) return;
+      let { bid, ask } = round;
+      if (which === "askUp") ask += step;
+      else if (which === "askDown") ask = Math.max(ask - step, bid + 1);
+      else if (which === "bidUp") bid = Math.min(bid + step, ask - 1);
+      else bid -= step; // bidDown
+      applyQuotes(bid, ask);
+    },
+    [round, applyQuotes],
+  );
+
+  // keyboard (desktop): hold = native OS key-repeat, no JS timer needed
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (pauseDepthRef.current > 0) return;
-      const step = e.shiftKey ? KEY_STEP_SHIFT : KEY_STEP;
       const k = e.key.toLowerCase();
-      let { bid, ask } = round;
-      if (k === KEYMAP.askUp) ask += step;
-      else if (k === KEYMAP.askDown) ask = Math.max(ask - step, bid + 1);
-      else if (k === KEYMAP.bidUp) bid = Math.min(bid + step, ask - 1);
-      else if (k === KEYMAP.bidDown) bid -= step;
-      else return;
+      let which: Dir | null = null;
+      if (k === KEYMAP.askUp) which = "askUp";
+      else if (k === KEYMAP.askDown) which = "askDown";
+      else if (k === KEYMAP.bidUp) which = "bidUp";
+      else if (k === KEYMAP.bidDown) which = "bidDown";
+      if (!which) return;
       e.preventDefault();
-      applyQuotes(bid, ask);
+      nudge(which, e.shiftKey ? KEY_STEP_SHIFT : KEY_STEP);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [round, applyQuotes]);
+  }, [nudge]);
+
+  // touch pads: tap = one nudge; press-and-hold repeats at the keys.ts cadence
+  const holdRef = useRef<{ t: number; i: number } | null>(null);
+  const endHold = useCallback(() => {
+    const h = holdRef.current;
+    if (!h) return;
+    if (h.t) window.clearTimeout(h.t);
+    if (h.i) window.clearInterval(h.i);
+    holdRef.current = null;
+  }, []);
+  const startHold = useCallback(
+    (which: Dir) => {
+      endHold();
+      nudge(which, KEY_STEP); // immediate first step
+      const t = window.setTimeout(() => {
+        const i = window.setInterval(() => nudge(which, KEY_STEP), KEY_HOLD_REPEAT_MS);
+        holdRef.current = { t: 0, i };
+      }, KEY_HOLD_DELAY_MS);
+      holdRef.current = { t, i: 0 };
+    },
+    [nudge, endHold],
+  );
+  useEffect(() => endHold, [endHold]); // clear any live hold on unmount
+
+  // Touch pads are shown only during the running clock (the arm overlay owns
+  // the bottom strip pre-start). Clear a held button whenever they hide.
+  const showPads = touchControls && phase === "run" && !card && !frozen;
+  useEffect(() => {
+    if (!showPads) endHold();
+  }, [showPads, endHold]);
 
   // ---- drawing -------------------------------------------------------------
 
@@ -423,6 +511,21 @@ export function LiveScreen({
             <button className="btn primary" onClick={dismissCard}>
               {card.id === "end" ? "Finish" : "Got it"}
             </button>
+          </div>
+        )}
+        {showPads && (
+          <div className="quote-pads">
+            {/* left = ASK, right = BID — mirrors the keyboard's W/S · P/L split */}
+            <div className="quote-pad">
+              <PadButton dir="askUp" glyph="▲" label="ask up" onStart={startHold} onEnd={endHold} />
+              <span className="pad-label">ASK</span>
+              <PadButton dir="askDown" glyph="▼" label="ask down" onStart={startHold} onEnd={endHold} />
+            </div>
+            <div className="quote-pad">
+              <PadButton dir="bidUp" glyph="▲" label="bid up" onStart={startHold} onEnd={endHold} />
+              <span className="pad-label">BID</span>
+              <PadButton dir="bidDown" glyph="▼" label="bid down" onStart={startHold} onEnd={endHold} />
+            </div>
           </div>
         )}
       </div>

@@ -320,6 +320,63 @@ b {
   margin-right: 4px;
 }
 
+/* --- touch quote pads (coarse-pointer only) ------------------------------ */
+
+.quote-pads {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 2px 4px 6px;
+  pointer-events: none; /* gaps pass taps through to the canvas */
+  z-index: 2;
+}
+
+.quote-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.pad-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  line-height: 1;
+  margin: -2px 0;
+}
+
+.pad-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  background: none;
+  border: 0;
+  padding: 0;
+  width: 60px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--v); /* white arrow, no fill, no box */
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: opacity 90ms ease, transform 90ms ease;
+}
+
+.pad-btn:active {
+  opacity: 0.5;
+  transform: scale(0.85);
+}
+
 /* --- help + tutorial ----------------------------------------------------- */
 
 .help-btn {
